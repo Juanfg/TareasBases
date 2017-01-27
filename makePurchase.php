@@ -1,9 +1,9 @@
 <?php 
-	
 	require 'database.php';
 
-        $productError = null;
-        $quantityError = null;
+	$commit = true;
+    $productError = null;
+    $quantityError = null;
 
 	if ( !empty($_POST)) {
 		
@@ -26,26 +26,37 @@
 		// insert data
 		if ($valid) {
             //TODO: Transaccion por hacer
-			$pdo = Database::connect();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$sql = "SELECT quantity FROM inventory WHERE product = '.$product.'";
-			if ($sql['quantity'] < $quantity)
-			{
-				$quantityError = 'The quantity is incorrect';
-				$valid = false;
-			}
+			$sql2 = "INSERT INTO purchaseproduct (purchase,product,quantity) values(1, ?, ?)";
+			$sql3 = "UPDATE inventory SET quantity = quantity + ? WHERE Id = ?";
 
-			if($valid)
-			{
-				echo $sql['quantity'];
-				echo $quantity;
-				$sql = "INSERT INTO saleproduct (sale,product) values(1, ?)";			
-				$q = $pdo->prepare($sql);
-				$q->execute(array($product));			
-				Database::disconnect();
-				header("Location: index.php");
-			}
+            try {
+        		$dbh = Database::connect();
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    		} catch(PDOException $e) {
+        		echo "Failed to connect to the database";
+        		exit;
+    		}
+            try{
+            	$dbh->beginTransaction();
+				$q = $dbh->prepare($sql2);
+				$q->execute(array($product, $quantity));
+				if($q->rowCount() <= 0 ) $commit = false;
+
+
+				$q = $dbh->prepare($sql3);
+				$q->execute(array($quantity, $product));
+				if($q->rowCount() <= 0 ) $commit = false;
+			} catch(PDOException $e) {
+	        	$commit = false;
+	    	}
+
+	    	if(!$commit){
+	        	$dbh->rollback();
+	     	} else {
+	        	$dbh->commit();
+	        	header("Location: purchase.php");
+	     	}
 		}
 	}
 ?>
@@ -63,10 +74,10 @@
 	    <div class="container">
 	    	<div class="span10 offset1">
 	    		<div class="row">
-		   			<h3>Make a new Purchase</h3>
+		   			<h3>Make a purchase</h3>
 		   		</div>
 	    		
-				<form class="form-horizontal" action="makeSale.php" method="post">
+				<form class="form-horizontal" action="makePurchase.php" method="post">
 
 					<div class="control-group <?php echo !empty($productError)?'error':'';?>">
 				    	<label class="control-label">Product</label>
@@ -90,11 +101,13 @@
 
 					<div class="control-group <?php echo !empty($quantityError)?'error':'';?>">
 					    <label class="control-label"> Quantity </label>
-						    <div class="quantity">
-	                    	    <input name="quantity" type="number" placeholder="Quantity" value="0">
-	                               	<?php if(($quantityError != null)) ?>
-									   <span class="help-inline"><?php echo $quantityError;?></span>				      	
-						    </div>
+							<div class="controls">
+								<div class="quantity">
+									<input name="quantity" type="number" placeholder="Quantity" value="0">
+										<?php if(($quantityError != null)) ?>
+										<span class="help-inline"><?php echo $quantityError;?></span>				      	
+								</div>
+							</div>
 					</div>
 
 					<div class="form-actions">
