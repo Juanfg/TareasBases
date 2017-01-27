@@ -1,9 +1,9 @@
 <?php 
-	
 	require 'database.php';
 
-        $productError = null;
-        $quantityError = null;
+	$commit = true;
+    $productError = null;
+    $quantityError = null;
 
 	if ( !empty($_POST)) {
 		
@@ -26,34 +26,53 @@
 		// insert data
 		if ($valid) {
             //TODO: Transaccion por hacer
-			$pdo = Database::connect();
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$sql = "SELECT quantity FROM inventory WHERE product = '.$product.'";
-			$qq;
-			foreach ($pdo->query($sql) as $row)
-			{
-				$qq = $row['quantity'];
-			}
-			if ($qq < $quantity)
-			{
-				$quantityError = 'There is not enough in stock';
-				$valid = false;
-			}
+			$sql1 = "SELECT quantity FROM inventory WHERE product = '.$product.'";
+			$sql2 = "INSERT INTO saleproduct (sale,product,quantity) values(1, ?, ?)";
+			$sql3 = "UPDATE inventory SET quantity = quantity - ? WHERE Id = ?";
 
-			if($valid)
-			{
-				$sql = "INSERT INTO saleproduct (sale,product,quantity) values(1, ?, ?)";			
-				$q = $pdo->prepare($sql);
-				$q->execute(array($product, $quantity));
+            try {
+        		$dbh = Database::connect();
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    		} catch(PDOException $e) {
+        		echo "Failed to connect to the database";
+        		exit;
+    		}
+            try{
+            	$dbh->beginTransaction(); 
+				foreach ($dbh->query($sql1) as $row)
+				{
+					$qq = $row['quantity'];
+				}
+				if ($qq < $quantity)
+				{
+					$quantityError = 'There is not enough in stock';
+					$valid = false;
+					$commit = false;
+				}
 
-				$sql = "UPDATE inventory SET quantity = quantity - ? WHERE Id = ?";
-				$q = $pdo->prepare($sql);
-				$q->execute(array($quantity, $product));
+				if($valid)
+				{
 
-				Database::disconnect();
-				header("Location: sales.php");
-			}
+					$q = $dbh->prepare($sql2);
+					$q->execute(array($product, $quantity));
+					if($q->rowCount() <= 0 ) $commit = false;
+
+
+					$q = $dbh->prepare($sql3);
+					$q->execute(array($quantity, $product));
+					if($q->rowCount() <= 0 ) $commit = false;
+				}
+			} catch(PDOException $e) {
+	        	$commit = false;
+	    	}
+
+	    	if(!$commit){
+	        	$dbh->rollback();
+	     	} else {
+	        	$dbh->commit();
+	        	header("Location: sales.php");
+	     	}
 		}
 	}
 ?>
