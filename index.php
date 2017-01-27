@@ -17,9 +17,9 @@
 			                <tr>		                 
 			                	<th>ID</th>
 			                	<th>Name</th>
+			                	<th>Price</th> 
+			                	<th>Department</th>  
 	                        	<th>Category</th>   
-	                        	<th>Department</th>   
-	                        	<th>Price</th>   
 	                        	<th>Quantity</th>                    		                  
 			                </tr>
 			            </thead>
