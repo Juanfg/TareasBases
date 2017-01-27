@@ -9,42 +9,27 @@
 	<body>
 	    <div class="container">
 				<div class="row">
-					<p>
-						<a href="create.php" class="btn btn-success">Buy</a>
-					</p>
-					
+		   			<h3>Purchases</h3>
+		   		</div>
+				<div class="row">
 					<table class="table table-striped table-bordered">
 			            <thead>
 			                <tr>		                 
 			                	<th>ID</th>
-			                	<th>Name</th>
-	                        	<th>Category</th>   
-	                        	<th>Department</th>   
-	                        	<th>Price</th>   
-	                        	<th>Quantity</th>  
-	                        	<th>Actions</th>                          		                  
+			                	<th>Product</th> 
+			                	<th>Quantity</th>                  		                  
 			                </tr>
 			            </thead>
 			            <tbody>
 			              	<?php 
 						   	include 'database.php';
 						   	$pdo = Database::connect();
-						   	$sql = 'SELECT product.Id, product.name, product.price, department.name AS "department", category.name AS "category", inventory.quantity FROM product INNER JOIN department ON product.department = department.Id INNER JOIN category on product.category = category.Id inner join inventory ON inventory.product = product.Id ORDER BY product.Id';
+						   	$sql = 'SELECT purchaseproduct.Id, product.name AS "product", purchaseproduct.quantity FROM purchaseproduct INNER JOIN product ON purchaseproduct.product = product.Id  ORDER BY purchaseproduct.Id';
 						   	foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';							   	
 	    					   	echo '<td>'. $row['Id'] . '</td>';
-	    					  	echo '<td>'. $row['name'] . '</td>';
-	    					  	echo '<td>'. $row['price'] . '</td>';
-	    					  	echo '<td>'. $row['department'] . '</td>';
-	    					  	echo '<td>'. $row['category'] . '</td>';
+	    					  	echo '<td>'. $row['product'] . '</td>';
 	    					  	echo '<td>'. $row['quantity'] . '</td>';
-								// echo '<td>';    echo ($row['ac'])?"SI":"NO"; echo'</td>';
-								// echo '<td width=250>';
-								// echo '<a class="btn" href="read.php?id='.$row['Id'].'">Detalles</a>';
-								// echo '&nbsp;';
-								// echo '<a class="btn btn-success" href="update.php?id='.$row['Id'].'">Actualizar</a>';
-								// echo '&nbsp;';
-							 // 	echo '<a class="btn btn-danger" href="delete.php?id='.$row['Id'].'">Eliminar</a>';
 	    					    echo '</td>';
 							  	echo '</tr>';
 						    }
@@ -52,6 +37,10 @@
 						  	?>
 					    </tbody>
 		            </table>
+		            <p>
+						<a href="index.php" class="btn btn-success">Index</a>
+						<a href="makePurchase.php" class="btn btn-success">Make a Purchase</a>
+					</p>
 	    	</div>
 	    </div> 
 	</body>

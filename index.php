@@ -9,10 +9,9 @@
 	<body>
 	    <div class="container">
 				<div class="row">
-					<p>
-						<a href="create.php" class="btn btn-success">Buy</a>
-					</p>
-					
+		   			<h3>Inventory</h3>
+		   		</div>
+				<div class="row">					
 					<table class="table table-striped table-bordered">
 			            <thead>
 			                <tr>		                 
@@ -21,8 +20,7 @@
 	                        	<th>Category</th>   
 	                        	<th>Department</th>   
 	                        	<th>Price</th>   
-	                        	<th>Quantity</th>  
-	                        	<th>Actions</th>                          		                  
+	                        	<th>Quantity</th>                    		                  
 			                </tr>
 			            </thead>
 			            <tbody>
@@ -44,7 +42,7 @@
 								// echo '&nbsp;';
 								// echo '<a class="btn btn-success" href="update.php?id='.$row['Id'].'">Actualizar</a>';
 								// echo '&nbsp;';
-							 // 	echo '<a class="btn btn-danger" href="delete.php?id='.$row['Id'].'">Eliminar</a>';
+								//echo '<a class="btn btn-danger" href="delete.php?id='.$row['Id'].'">Eliminar</a>';
 	    					    echo '</td>';
 							  	echo '</tr>';
 						    }
@@ -52,6 +50,10 @@
 						  	?>
 					    </tbody>
 		            </table>
+		            <p>
+						<a href="sales.php" class="btn btn-success">Sales</a>
+						<a href="purchase.php" class="btn btn-success">Purchases</a>
+					</p>
 	    	</div>
 	    </div> 
 	</body>

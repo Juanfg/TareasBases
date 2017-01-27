@@ -63,7 +63,7 @@
 	    <div class="container">
 	    	<div class="span10 offset1">
 	    		<div class="row">
-		   			<h3>Hacer una nueva compra</h3>
+		   			<h3>Make a new Purchase</h3>
 		   		</div>
 	    		
 				<form class="form-horizontal" action="makeSale.php" method="post">
