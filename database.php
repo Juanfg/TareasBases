@@ -3,7 +3,7 @@
 		private static $dbName 			= 'homedepot' ; 
 		private static $dbHost 			= 'localhost' ;
 		private static $dbUsername 		= 'root';
-		private static $dbUserPassword 	= '1423qrwe';
+		private static $dbUserPassword 	= '';
 		
 		private static $cont  = null;
 		
