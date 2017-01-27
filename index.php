@@ -10,15 +10,18 @@
 	    <div class="container">
 				<div class="row">
 					<p>
-						<a href="create.php" class="btn btn-success">No se que va</a>
+						<a href="create.php" class="btn btn-success">Buy</a>
 					</p>
 					
 					<table class="table table-striped table-bordered">
 			            <thead>
 			                <tr>		                 
-			                	<th>submarcamarca	</th>
-			                	<th>marca 			</th>
-	                        	<th>A/C 			</th>                          		                  
+			                	<th>ID</th>
+			                	<th>Name</th>
+	                        	<th>Category</th>   
+	                        	<th>Department</th>   
+	                        	<th>Price</th>   
+	                        	<th>Quantity</th>                          		                  
 			                </tr>
 			            </thead>
 			            <tbody>
