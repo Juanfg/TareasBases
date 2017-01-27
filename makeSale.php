@@ -30,21 +30,29 @@
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$sql = "SELECT quantity FROM inventory WHERE product = '.$product.'";
-			if ($sql['quantity'] < $quantity)
+			$qq;
+			foreach ($pdo->query($sql) as $row)
 			{
-				$quantityError = 'The quantity is incorrect';
+				$qq = $row['quantity'];
+			}
+			if ($qq < $quantity)
+			{
+				$quantityError = 'There is not enough in stock';
 				$valid = false;
 			}
 
 			if($valid)
 			{
-				echo $sql['quantity'];
-				echo $quantity;
-				$sql = "INSERT INTO saleproduct (sale,product) values(1, ?)";			
+				$sql = "INSERT INTO saleproduct (sale,product,quantity) values(1, ?, ?)";			
 				$q = $pdo->prepare($sql);
-				$q->execute(array($product));			
+				$q->execute(array($product, $quantity));
+
+				$sql = "UPDATE inventory SET quantity = quantity - ? WHERE Id = ?";
+				$q = $pdo->prepare($sql);
+				$q->execute(array($quantity, $product));
+
 				Database::disconnect();
-				header("Location: index.php");
+				header("Location: sales.php");
 			}
 		}
 	}
@@ -90,11 +98,13 @@
 
 					<div class="control-group <?php echo !empty($quantityError)?'error':'';?>">
 					    <label class="control-label"> Quantity </label>
-						    <div class="quantity">
-	                    	    <input name="quantity" type="number" placeholder="Quantity" value="0">
-	                               	<?php if(($quantityError != null)) ?>
-									   <span class="help-inline"><?php echo $quantityError;?></span>				      	
-						    </div>
+							<div class="controls">
+								<div class="quantity">
+									<input name="quantity" type="number" placeholder="Quantity" value="0">
+										<?php if(($quantityError != null)) ?>
+										<span class="help-inline"><?php echo $quantityError;?></span>				      	
+								</div>
+							</div>
 					</div>
 
 					<div class="form-actions">
