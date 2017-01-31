@@ -24,7 +24,7 @@
 			              	<?php 
 						   	include 'database.php';
 						   	$pdo = Database::connect();
-						   	$sql = 'SELECT purchaseproduct.Id, product.name AS "product", purchaseproduct.quantity FROM purchaseproduct INNER JOIN product ON purchaseproduct.product = product.Id  ORDER BY purchaseproduct.Id';
+						   	$sql = 'SELECT purchaseProduct.Id, product.name AS "product", purchaseProduct.quantity FROM purchaseProduct INNER JOIN product ON purchaseProduct.product = product.Id  ORDER BY purchaseProduct.Id';
 						   	foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';							   	
 	    					   	echo '<td>'. $row['Id'] . '</td>';

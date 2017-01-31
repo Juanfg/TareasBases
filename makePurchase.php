@@ -27,7 +27,7 @@
 		if ($valid) {
             //TODO: Transaccion por hacer
 
-			$sql2 = "INSERT INTO purchaseproduct (purchase,product,quantity) values(1, ?, ?)";
+			$sql2 = "INSERT INTO purchaseProduct (purchase,product,quantity) values(1, ?, ?)";
 			$sql3 = "UPDATE inventory SET quantity = quantity + ? WHERE Id = ?";
 
             try {
@@ -87,12 +87,12 @@
 		                        <?php
 							   		$pdo = Database::connect();
 							   		$query = 'SELECT * FROM product';
-			 				   		foreach ($pdo->query($query) as $row) {
-		                        		if ($row['Id']==$product)
-		                        			echo "<option selected value='" . $row['Id'] . "'>" . $row['name'] . "</option>";
-		                        		else
-		                        			echo "<option value='" . $row['Id'] . "'>" . $row['name'] . "</option>";
-			   						}
+			 						foreach ($pdo->query($query) as $row) {
+										if ($row['Id']==$product)
+											echo "<option selected value='" . $row['Id'] . "'>" . $row['name'] . "</option>";
+										else
+											echo "<option value='" . $row['Id'] . "'>" . $row['name'] . "</option>";
+									}
 			   						Database::disconnect();
 			  					?>
                             </select>

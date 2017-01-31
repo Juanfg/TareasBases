@@ -36,13 +36,6 @@
 	    					  	echo '<td>'. $row['department'] . '</td>';
 	    					  	echo '<td>'. $row['category'] . '</td>';
 	    					  	echo '<td>'. $row['quantity'] . '</td>';
-								// echo '<td>';    echo ($row['ac'])?"SI":"NO"; echo'</td>';
-								// echo '<td width=250>';
-								// echo '<a class="btn" href="read.php?id='.$row['Id'].'">Detalles</a>';
-								// echo '&nbsp;';
-								// echo '<a class="btn btn-success" href="update.php?id='.$row['Id'].'">Actualizar</a>';
-								// echo '&nbsp;';
-								//echo '<a class="btn btn-danger" href="delete.php?id='.$row['Id'].'">Eliminar</a>';
 	    					    echo '</td>';
 							  	echo '</tr>';
 						    }

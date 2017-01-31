@@ -28,7 +28,7 @@
             //TODO: Transaccion por hacer
 
 			$sql1 = "SELECT quantity FROM inventory WHERE product = '.$product.'";
-			$sql2 = "INSERT INTO saleproduct (sale,product,quantity) values(1, ?, ?)";
+			$sql2 = "INSERT INTO saleProduct (sale,product,quantity) values(1, ?, ?)";
 			$sql3 = "UPDATE inventory SET quantity = quantity - ? WHERE Id = ?";
 
             try {
