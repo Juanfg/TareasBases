@@ -158,7 +158,7 @@ CREATE TABLE `inventory` (
   PRIMARY KEY (`Id`),
   KEY `product` (`product`),
   CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +167,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,53),(2,2,324),(3,3,422),(4,4,123),(5,5,232),(6,6,32),(7,7,132),(8,8,12);
+INSERT INTO `inventory` VALUES (1,1,250),(2,2,279),(3,3,422),(4,4,123),(5,5,282),(6,6,32),(7,7,2),(8,8,30),(9,9,555),(10,10,4),(11,11,12),(12,12,54),(13,13,60),(14,14,110),(15,15,244),(16,16,1),(17,17,52),(18,18,132),(19,19,13),(20,20,12000);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +214,7 @@ CREATE TABLE `product` (
   KEY `category` (`category`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`department`) REFERENCES `department` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category`) REFERENCES `category` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +223,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Hammer',54,2,4),(2,'Water Centrifuger',1200,3,3),(3,'Shovel',154,1,2),(4,'Garden Razor',5000,1,4),(5,'Chainsaw',54000,2,4),(6,'Drill',1500,2,2),(7,'Fauce',4000,4,3),(8,'Trash Can',50,4,2);
+INSERT INTO `product` VALUES (1,'Hammer',54,2,4),(2,'Water Centrifuger',1200,3,3),(3,'Shovel',154,1,2),(4,'Garden Razor',5000,1,4),(5,'Chainsaw',54000,2,4),(6,'Drill',1500,2,2),(7,'Fauce',4000,4,3),(8,'Trash Can',50,4,2),(9,'Glue',545,2,4),(10,'Paint',10,3,3),(11,'Toilets',1554,1,2),(12,'Window',3510,1,4),(13,'Nails',54,2,4),(14,'Flower Pot',350,2,2),(15,'Dirt',500,4,3),(16,'Grass',350,4,2),(17,'Floor',4400,2,4),(18,'Light Bulb',15,2,2),(19,'Fence',300,4,3),(20,'Cement',43,4,2);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,7 +298,7 @@ CREATE TABLE `purchaseProduct` (
   KEY `product` (`product`),
   CONSTRAINT `purchaseproduct_ibfk_1` FOREIGN KEY (`purchase`) REFERENCES `purchase` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `purchaseproduct_ibfk_2` FOREIGN KEY (`product`) REFERENCES `product` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,7 +307,7 @@ CREATE TABLE `purchaseProduct` (
 
 LOCK TABLES `purchaseProduct` WRITE;
 /*!40000 ALTER TABLE `purchaseProduct` DISABLE KEYS */;
-INSERT INTO `purchaseProduct` VALUES (1,1,1,122),(2,2,2,315),(3,3,3,132),(4,4,4,412),(5,5,5,3),(6,6,6,1523);
+INSERT INTO `purchaseProduct` VALUES (1,1,1,122),(2,2,2,315),(3,3,3,132),(4,4,4,412),(5,5,5,3),(6,6,6,1523),(9,1,8,14),(10,1,5,50),(11,1,1,47),(12,1,1,500),(13,1,8,16);
 /*!40000 ALTER TABLE `purchaseProduct` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +355,7 @@ CREATE TABLE `saleProduct` (
   KEY `sale` (`sale`),
   CONSTRAINT `saleproduct_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `saleproduct_ibfk_2` FOREIGN KEY (`sale`) REFERENCES `sale` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +364,7 @@ CREATE TABLE `saleProduct` (
 
 LOCK TABLES `saleProduct` WRITE;
 /*!40000 ALTER TABLE `saleProduct` DISABLE KEYS */;
-INSERT INTO `saleProduct` VALUES (1,1,1,12),(2,2,2,15),(3,3,3,12),(4,4,4,12),(5,5,5,323),(6,7,7,4),(7,8,8,1);
+INSERT INTO `saleProduct` VALUES (1,1,1,12),(2,2,2,15),(3,3,3,12),(4,4,4,12),(5,5,5,323),(6,7,7,4),(7,8,8,1),(8,8,1,12),(9,7,1,130),(10,2,1,45),(11,1,1,100),(12,1,1,250);
 /*!40000 ALTER TABLE `saleProduct` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -377,4 +377,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-26 23:05:34
+-- Dump completed on 2017-01-31 13:15:14
