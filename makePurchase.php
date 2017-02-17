@@ -27,7 +27,9 @@
 		if ($valid) {
             //TODO: Transaccion por hacer
 
-			$sql2 = "INSERT INTO purchaseProduct (purchase,product,quantity) values(1, ?, ?)";
+			$sqlfirstTemp = "INSERT INTO purchase(manager, provider, time) VALUES(1, 1, NOW())";
+			$sqltemp = "SELECT Id FROM purchase order by Id desc LIMIT 1";
+			$sql2 = "INSERT INTO purchaseProduct (purchase,product,quantity) values(?, ?, ?)";
 			$sql3 = "UPDATE inventory SET quantity = quantity + ? WHERE Id = ?";
 
             try {
@@ -39,8 +41,19 @@
     		}
             try{
             	$dbh->beginTransaction();
+
+				$q = $dbh->prepare($sqlfirstTemp);
+				$q->execute();
+				if($q->rowCount() <= 0) $commit = false;
+
+				$idPurchase;
+				foreach($dbh->query($sqltemp) as $row)
+				{
+					$idPurchase = $row['Id'];
+				}
+
 				$q = $dbh->prepare($sql2);
-				$q->execute(array($product, $quantity));
+				$q->execute(array($idPurchase, $product, $quantity));
 				if($q->rowCount() <= 0 ) $commit = false;
 
 
@@ -111,8 +124,8 @@
 					</div>
 
 					<div class="form-actions">
-						<button type="submit" class="btn btn-success">Agregar</button>
-						<a class="btn" href="index.php">Regresar</a>
+						<button type="submit" class="btn btn-success">Add purchase</button>
+						<a class="btn" href="purchase.php">Back</a>
 					</div>
 
 				</form>

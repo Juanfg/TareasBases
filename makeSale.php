@@ -28,7 +28,9 @@
             //TODO: Transaccion por hacer
 
 			$sql1 = "SELECT quantity FROM inventory WHERE product = '.$product.'";
-			$sql2 = "INSERT INTO saleProduct (sale,product,quantity) values(1, ?, ?)";
+			$sqlfirstTemp = "INSERT INTO sale(client, date, time) VALUES(1, NOW(), NOW())";
+			$sqltemp = "SELECT Id FROM sale order by Id desc LIMIT 1";
+			$sql2 = "INSERT INTO saleProduct (sale,product,quantity) values(?, ?, ?)";
 			$sql3 = "UPDATE inventory SET quantity = quantity - ? WHERE Id = ?";
 			$sql4 = "CALL notnegatives(?,?,@flg)";
 			$sql5 = "SELECT @flg";
@@ -60,11 +62,19 @@
 
 				if($valid)
 				{
+					$q = $dbh->prepare($sqlfirstTemp);
+					$q->execute();
+					if($q->rowCount() <= 0) $commit = false;
+
+					$idSale;
+					foreach($dbh->query($sqltemp) as $row)
+					{
+						$idSale = $row['Id'];
+					}
 
 					$q = $dbh->prepare($sql2);
-					$q->execute(array($product, $quantity));
+					$q->execute(array($idSale, $product, $quantity));
 					if($q->rowCount() <= 0 ) $commit = false;
-
 
 					$q = $dbh->prepare($sql3);
 					$q->execute(array($quantity, $product));
@@ -78,7 +88,7 @@
 	        	$dbh->rollback();
 	     	} else {
 	        	$dbh->commit();
-	        	// header("Location: sales.php");
+	        	header("Location: sales.php");
 	     	}
 		}
 	}
@@ -134,8 +144,8 @@
 					</div>
 
 					<div class="form-actions">
-						<button type="submit" class="btn btn-success">Agregar</button>
-						<a class="btn" href="index.php">Regresar</a>
+						<button type="submit" class="btn btn-success">Add sale</button>
+						<a class="btn" href="sales.php">Back</a>
 					</div>
 
 				</form>

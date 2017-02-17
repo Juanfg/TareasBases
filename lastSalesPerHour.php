@@ -9,15 +9,14 @@
 	<body>
 	    <div class="container">
 				<div class="row">
-		   			<h3>All Purchases</h3>
+		   			<h3>Last Sales Per Hour</h3>
 		   		</div>
 				<div class="row">
 					<table class="table table-striped table-bordered">
 			            <thead>
 			                <tr>		                 
 			                	<th>ID</th>
-			                	<th>Product</th> 
-			                	<th>Quantity</th>  
+			                	<th>Amount of Sales</th> 
 								<th>Time</th>                		                  
 			                </tr>
 			            </thead>
@@ -25,12 +24,11 @@
 			              	<?php 
 						   	include 'database.php';
 						   	$pdo = Database::connect();
-						   	$sql = 'SELECT purchaseProduct.Id, product.name AS "product", purchaseProduct.quantity, purchase.time FROM purchaseProduct, product, purchase WHERE purchaseProduct.product = product.Id AND purchaseProduct.purchase = purchase.Id ORDER BY purchaseProduct.Id';
+						   	$sql = 'SELECT * FROM salesperhour ORDER BY time asc';
 						   	foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';							   	
-	    					   	echo '<td>'. $row['Id'] . '</td>';
-	    					  	echo '<td>'. $row['product'] . '</td>';
-	    					  	echo '<td>'. $row['quantity'] . '</td>';
+	    					   	echo '<td>'. $row['id'] . '</td>';
+	    					  	echo '<td>'. $row['amountofsales'] . '</td>';
 								echo '<td>'. $row['time'] . '</td>';
 	    					    echo '</td>';
 							  	echo '</tr>';
@@ -41,7 +39,6 @@
 		            </table>
 		            <p>
 						<a href="index.php" class="btn btn-success">Home</a>
-						<a href="makePurchase.php" class="btn btn-success">Make a Purchase</a>
 					</p>
 	    	</div>
 	    </div> 

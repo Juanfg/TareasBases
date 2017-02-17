@@ -8,30 +8,37 @@
 
 	<body>
 	    <div class="container">
-				<div class="row">
-		   			<h3>All Purchases</h3>
+	    		<div class="row">
+		   			<h3>Categories</h3>
 		   		</div>
-				<div class="row">
+				<div class="row">			
 					<table class="table table-striped table-bordered">
 			            <thead>
 			                <tr>		                 
 			                	<th>ID</th>
-			                	<th>Product</th> 
-			                	<th>Quantity</th>  
-								<th>Time</th>                		                  
+			                	<th>Categorie</th> 
+			                	<th>Number of products</th>          		                  
 			                </tr>
 			            </thead>
 			            <tbody>
 			              	<?php 
 						   	include 'database.php';
 						   	$pdo = Database::connect();
-						   	$sql = 'SELECT purchaseProduct.Id, product.name AS "product", purchaseProduct.quantity, purchase.time FROM purchaseProduct, product, purchase WHERE purchaseProduct.product = product.Id AND purchaseProduct.purchase = purchase.Id ORDER BY purchaseProduct.Id';
+						   	$sql = 'SELECT * FROM category';
+							$sql2 = 'CALL productsbycategorie(?, @q)';
+							$sql3 = 'SELECT @q';
 						   	foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';							   	
 	    					   	echo '<td>'. $row['Id'] . '</td>';
-	    					  	echo '<td>'. $row['product'] . '</td>';
-	    					  	echo '<td>'. $row['quantity'] . '</td>';
-								echo '<td>'. $row['time'] . '</td>';
+	    					  	echo '<td>'. $row['name'] . '</td>';
+								$cat = $row['Id'];
+								$holi = $pdo->prepare($sql2);
+								$holi->execute(array($cat));
+								foreach ($pdo->query($sql3) as $roww)
+								{
+									$q = $roww['@q'];
+								}
+	    					  	echo '<td>'. $q . '</td>';
 	    					    echo '</td>';
 							  	echo '</tr>';
 						    }
@@ -41,7 +48,6 @@
 		            </table>
 		            <p>
 						<a href="index.php" class="btn btn-success">Home</a>
-						<a href="makePurchase.php" class="btn btn-success">Make a Purchase</a>
 					</p>
 	    	</div>
 	    </div> 

@@ -9,7 +9,7 @@
 	<body>
 	    <div class="container">
 	    		<div class="row">
-		   			<h3>Sales</h3>
+		   			<h3>All Sales</h3>
 		   		</div>
 				<div class="row">			
 					<table class="table table-striped table-bordered">
@@ -17,19 +17,21 @@
 			                <tr>		                 
 			                	<th>ID</th>
 			                	<th>Product</th> 
-			                	<th>Quantity</th>          		                  
+			                	<th>Quantity</th>
+								<th>Time</th>          		                  
 			                </tr>
 			            </thead>
 			            <tbody>
 			              	<?php 
 						   	include 'database.php';
 						   	$pdo = Database::connect();
-						   	$sql = 'SELECT saleProduct.Id, product.name AS "product", saleProduct.quantity FROM saleProduct INNER JOIN product ON saleProduct.product = product.Id  ORDER BY saleProduct.Id';
+						   	$sql = 'SELECT saleProduct.Id, product.name AS "product", sale.time, saleProduct.quantity FROM saleProduct, sale, product WHERE saleProduct.product = product.Id AND saleProduct.sale = sale.Id ORDER BY saleProduct.Id';
 						   	foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';							   	
 	    					   	echo '<td>'. $row['Id'] . '</td>';
 	    					  	echo '<td>'. $row['product'] . '</td>';
 	    					  	echo '<td>'. $row['quantity'] . '</td>';
+								echo '<td>'. $row['time'] . '</td>';
 	    					    echo '</td>';
 							  	echo '</tr>';
 						    }
@@ -38,7 +40,7 @@
 					    </tbody>
 		            </table>
 		            <p>
-						<a href="index.php" class="btn btn-success">Index</a>
+						<a href="index.php" class="btn btn-success">Home</a>
 						<a href="makeSale.php" class="btn btn-success">Make a Sale</a>
 					</p>
 	    	</div>
