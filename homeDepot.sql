@@ -1,6 +1,6 @@
 -- MySQL dump 10.16  Distrib 10.1.10-MariaDB, for osx10.6 (i386)
 --
--- Host: localhost    Database: avanzadasTarea
+-- Host: localhost    Database: homedepot
 -- ------------------------------------------------------
 -- Server version	10.1.10-MariaDB
 
@@ -167,7 +167,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,250),(2,2,279),(3,3,422),(4,4,123),(5,5,282),(6,6,32),(7,7,2),(8,8,30),(9,9,555),(10,10,4),(11,11,12),(12,12,54),(13,13,60),(14,14,110),(15,15,244),(16,16,1),(17,17,52),(18,18,132),(19,19,13),(20,20,12000);
+INSERT INTO `inventory` VALUES (1,1,-5),(2,2,-601),(3,3,-4578),(4,4,-19878),(5,5,282),(6,6,32),(7,7,0),(8,8,30),(9,9,555),(10,10,-599996),(11,11,-11199988),(12,12,54),(13,13,60),(14,14,110),(15,15,0),(16,16,0),(17,17,0),(18,18,0),(19,19,0),(20,20,11999);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,6 +209,7 @@ CREATE TABLE `product` (
   `price` int(11) DEFAULT NULL,
   `department` int(11) DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
+  `orders` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `department` (`department`),
   KEY `category` (`category`),
@@ -223,7 +224,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Hammer',54,2,4),(2,'Water Centrifuger',1200,3,3),(3,'Shovel',154,1,2),(4,'Garden Razor',5000,1,4),(5,'Chainsaw',54000,2,4),(6,'Drill',1500,2,2),(7,'Fauce',4000,4,3),(8,'Trash Can',50,4,2),(9,'Glue',545,2,4),(10,'Paint',10,3,3),(11,'Toilets',1554,1,2),(12,'Window',3510,1,4),(13,'Nails',54,2,4),(14,'Flower Pot',350,2,2),(15,'Dirt',500,4,3),(16,'Grass',350,4,2),(17,'Floor',4400,2,4),(18,'Light Bulb',15,2,2),(19,'Fence',300,4,3),(20,'Cement',43,4,2);
+INSERT INTO `product` VALUES (1,'Hammer',54,2,4,15),(2,'Water Centrifuger',1200,3,3,10),(3,'Shovel',154,1,2,20),(4,'Garden Razor',5000,1,4,100),(5,'Chainsaw',54000,2,4,2),(6,'Drill',1500,2,2,200),(7,'Fauce',4000,4,3,90),(8,'Trash Can',50,4,2,4),(9,'Glue',545,2,4,15),(10,'Paint',10,3,3,10),(11,'Toilets',1554,1,2,20),(12,'Window',3510,1,4,100),(13,'Nails',54,2,4,2),(14,'Flower Pot',350,2,2,200),(15,'Dirt',500,4,3,90),(16,'Grass',350,4,2,4),(17,'Floor',4400,2,4,90),(18,'Light Bulb',15,2,2,4),(19,'Fence',300,4,3,90),(20,'Cement',43,4,2,4);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,6 +264,7 @@ CREATE TABLE `purchase` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `manager` int(11) DEFAULT NULL,
   `provider` int(11) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `manager` (`manager`),
   KEY `provider` (`provider`),
@@ -277,8 +279,35 @@ CREATE TABLE `purchase` (
 
 LOCK TABLES `purchase` WRITE;
 /*!40000 ALTER TABLE `purchase` DISABLE KEYS */;
-INSERT INTO `purchase` VALUES (1,1,2),(2,2,3),(3,3,4),(4,4,5),(5,5,6),(6,6,1);
+INSERT INTO `purchase` VALUES (1,1,2,'2017-02-17 06:11:17'),(2,2,3,'2017-02-17 06:11:17'),(3,3,4,'2017-02-17 06:11:17'),(4,4,5,'2017-02-17 06:11:17'),(5,5,6,'2017-02-17 06:11:17'),(6,6,1,'2017-02-17 06:11:17');
 /*!40000 ALTER TABLE `purchase` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `purchaseOrders`
+--
+
+DROP TABLE IF EXISTS `purchaseOrders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `purchaseOrders` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `productname` int(11) DEFAULT NULL,
+  `productsinstock` int(11) DEFAULT NULL,
+  `timeorder` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`),
+  KEY `productname` (`productname`),
+  CONSTRAINT `purchaseorders_ibfk_1` FOREIGN KEY (`productname`) REFERENCES `product` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchaseOrders`
+--
+
+LOCK TABLES `purchaseOrders` WRITE;
+/*!40000 ALTER TABLE `purchaseOrders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `purchaseOrders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -322,10 +351,11 @@ CREATE TABLE `sale` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `client` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `client` (`client`),
   CONSTRAINT `sale_ibfk_1` FOREIGN KEY (`client`) REFERENCES `client` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +364,7 @@ CREATE TABLE `sale` (
 
 LOCK TABLES `sale` WRITE;
 /*!40000 ALTER TABLE `sale` DISABLE KEYS */;
-INSERT INTO `sale` VALUES (1,1,'0000-00-00 00:00:00'),(2,1,'0000-00-00 00:00:00'),(3,2,'0000-00-00 00:00:00'),(4,3,'0000-00-00 00:00:00'),(5,4,'0000-00-00 00:00:00'),(6,5,'0000-00-00 00:00:00'),(7,6,'0000-00-00 00:00:00'),(8,5,'0000-00-00 00:00:00'),(9,6,'0000-00-00 00:00:00');
+INSERT INTO `sale` VALUES (1,1,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(2,1,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(3,2,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(4,3,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(5,4,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(6,5,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(7,6,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(8,5,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(9,6,'0000-00-00 00:00:00','2017-02-17 06:06:40'),(10,3,'2017-02-17 00:08:38','2017-02-17 06:08:38'),(11,3,'2017-02-17 00:09:46','2017-02-17 06:09:46'),(12,3,'2017-02-17 00:10:31','2017-02-17 06:10:31');
 /*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +385,7 @@ CREATE TABLE `saleProduct` (
   KEY `sale` (`sale`),
   CONSTRAINT `saleproduct_ibfk_1` FOREIGN KEY (`product`) REFERENCES `product` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `saleproduct_ibfk_2` FOREIGN KEY (`sale`) REFERENCES `sale` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,8 +394,78 @@ CREATE TABLE `saleProduct` (
 
 LOCK TABLES `saleProduct` WRITE;
 /*!40000 ALTER TABLE `saleProduct` DISABLE KEYS */;
-INSERT INTO `saleProduct` VALUES (1,1,1,12),(2,2,2,15),(3,3,3,12),(4,4,4,12),(5,5,5,323),(6,7,7,4),(7,8,8,1),(8,8,1,12),(9,7,1,130),(10,2,1,45),(11,1,1,100),(12,1,1,250);
+INSERT INTO `saleProduct` VALUES (1,1,1,12),(2,2,2,15),(3,3,3,12),(4,4,4,12),(5,5,5,323),(6,7,7,4),(7,8,8,1),(8,8,1,12),(9,7,1,130),(10,2,1,45),(11,1,1,100),(12,1,1,250),(13,19,1,13),(14,4,1,1),(15,16,1,1),(16,17,1,52),(17,7,1,2),(18,18,1,132),(19,15,1,244),(20,20,1,1),(21,1,1,255),(22,2,1,280),(23,2,1,600),(24,10,1,600000),(25,11,1,400000),(26,11,1,800000),(27,11,1,10000000),(28,4,1,20000),(29,3,1,5000),(30,1,NULL,10),(32,1,12,10);
 /*!40000 ALTER TABLE `saleProduct` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER after_saleproduct_insert AFTER INSERT ON saleproduct
+FOR EACH ROW
+BEGIN
+DECLARE v INTEGER DEFAULT 1;
+SELECT inventory.quantity INTO v FROM inventory WHERE inventory.product = new.product;
+IF v = new.quantity THEN
+INSERT INTO purchaseOrders (productname, productsinstock, timeorder) VALUES (new.product, (SELECT orders from product where Id = new.product), now());
+END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `salesperhour`
+--
+
+DROP TABLE IF EXISTS `salesperhour`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `salesperhour` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amountofsales` int(11) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `salesperhour`
+--
+
+LOCK TABLES `salesperhour` WRITE;
+/*!40000 ALTER TABLE `salesperhour` DISABLE KEYS */;
+INSERT INTO `salesperhour` VALUES (7,1,'2017-02-17 03:39:03');
+/*!40000 ALTER TABLE `salesperhour` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `temp`
+--
+
+DROP TABLE IF EXISTS `temp`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `temp` (
+  `h` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `temp`
+--
+
+LOCK TABLES `temp` WRITE;
+/*!40000 ALTER TABLE `temp` DISABLE KEYS */;
+INSERT INTO `temp` VALUES (2),(422),(422);
+/*!40000 ALTER TABLE `temp` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -377,4 +477,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-31 13:15:14
+-- Dump completed on 2017-02-17  0:15:35

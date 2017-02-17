@@ -1,9 +1,9 @@
 <?php
 	class Database {
-		private static $dbName 			= 'usuario0' ; 
+		private static $dbName 			= 'homedepot' ; 
 		private static $dbHost 			= 'localhost' ;
-		private static $dbUsername 		= 'usuario0';
-		private static $dbUserPassword 	= 'f4pbGcqcazAT';
+		private static $dbUsername 		= 'root';
+		private static $dbUserPassword 	= '1423qrwe';
 		
 		private static $cont  = null;
 		

@@ -30,6 +30,8 @@
 			$sql1 = "SELECT quantity FROM inventory WHERE product = '.$product.'";
 			$sql2 = "INSERT INTO saleProduct (sale,product,quantity) values(1, ?, ?)";
 			$sql3 = "UPDATE inventory SET quantity = quantity - ? WHERE Id = ?";
+			$sql4 = "CALL notnegatives(?,?,@flg)";
+			$sql5 = "SELECT @flg";
 
             try {
         		$dbh = Database::connect();
@@ -40,12 +42,17 @@
     		}
             try{
             	$dbh->beginTransaction(); 
+            	$qq = 9;
 				foreach ($dbh->query($sql1) as $row)
 				{
-					$qq = $row['quantity'];
+					$holi  = $dbh->prepare($sql4);
+					$holi->execute(array($product, $quantity));
+					foreach ($dbh->query($sql5) as $roww) {
+						$qq = $roww['@flg'];
+					}
 				}
-				if ($qq < $quantity)
-				{
+
+				if($qq != 0){
 					$quantityError = 'There is not enough in stock';
 					$valid = false;
 					$commit = false;
@@ -71,7 +78,7 @@
 	        	$dbh->rollback();
 	     	} else {
 	        	$dbh->commit();
-	        	header("Location: sales.php");
+	        	// header("Location: sales.php");
 	     	}
 		}
 	}
