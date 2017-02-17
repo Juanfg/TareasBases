@@ -467,6 +467,110 @@ LOCK TABLES `temp` WRITE;
 INSERT INTO `temp` VALUES (2),(422),(422);
 /*!40000 ALTER TABLE `temp` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'homedepot'
+--
+/*!50106 SET @save_time_zone= @@TIME_ZONE */ ;
+/*!50106 DROP EVENT IF EXISTS `salesperhour` */;
+DELIMITER ;;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;;
+/*!50003 SET character_set_client  = utf8 */ ;;
+/*!50003 SET character_set_results = utf8 */ ;;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;;
+/*!50003 SET @saved_time_zone      = @@time_zone */ ;;
+/*!50003 SET time_zone             = 'SYSTEM' */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `salesperhour` ON SCHEDULE EVERY 1 HOUR STARTS '2017-02-16 21:39:03' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+DECLARE _commit INTEGER DEFAULT 1;
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+BEGIN
+SET _commit = 0;
+END;
+start transaction;
+INSERT INTO salesperhour(amountofsales, time) VALUES((SELECT count(*) FROM sale WHERE time >= DATE_SUB(NOW(), interval 1 hour)), NOW());
+IF _commit = 1 THEN
+commit;
+ELSE
+rollback;
+END IF;
+END */ ;;
+/*!50003 SET time_zone             = @saved_time_zone */ ;;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;;
+/*!50003 SET character_set_results = @saved_cs_results */ ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;;
+DELIMITER ;
+/*!50106 SET TIME_ZONE= @save_time_zone */ ;
+
+--
+-- Dumping routines for database 'homedepot'
+--
+/*!50003 DROP FUNCTION IF EXISTS `profit` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `profit`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN 
+  DECLARE gain INTEGER;
+  DECLARE sales INTEGER;
+  DECLARE purchase INTEGER;
+  SELECT SUM(price * saleProduct.quantity) INTO sales FROM product, saleProduct, sale  WHERE saleProduct.product = product.Id AND saleProduct.sale = sale.Id AND sale.time >= DATE_SUB(NOW(), interval 24 hour);
+  SELECT SUM(price * purchaseProduct.quantity) INTO purchase FROM product, purchaseProduct, purchase  WHERE purchaseProduct.product = product.Id AND purchaseProduct.purchase = purchase.Id AND purchase.time >= DATE_SUB(NOW(), interval 24 hour);
+  SET gain = sales - purchase;
+  RETURN gain;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `notnegatives` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `notnegatives`(IN id INT, IN quantity INT, OUT flg INT)
+BEGIN
+DECLARE v INTEGER DEFAULT 0;
+DECLARE _commit INTEGER DEFAULT 1;
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+BEGIN
+SET _commit = 0;
+END;
+start transaction;
+SELECT inventory.quantity INTO v FROM inventory WHERE id = inventory.product;
+IF v < quantity THEN 
+SET flg = 1;
+ELSE 
+SET flg = 0;
+END IF;
+IF _commit = 1 THEN
+commit;
+ELSE
+rollback;
+END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -477,4 +581,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-17  0:15:35
+-- Dump completed on 2017-02-17  0:28:02
