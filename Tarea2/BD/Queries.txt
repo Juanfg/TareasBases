@@ -1,0 +1,11 @@
+Agrega aqui las demas queries
+
+CREATE OR REPLACE FUNCTION how_many_appointments (teacher_name character varying(60) , teacher_last_name character varying(60))
+RETURNS integer AS $total_appointments$
+declare
+	total_appointments integer;
+BEGIN
+    SELECT count(*) into total_appointments FROM appointment, teacher WHERE teacher.id = appointment.teacher AND teacher.name = teacher_name AND teacher.last_name = teacher_last_name;
+    RETURN total_appointments;
+END;
+$total_appointments$ LANGUAGE plpgsql;
