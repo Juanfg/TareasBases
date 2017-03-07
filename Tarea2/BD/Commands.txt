@@ -1,0 +1,172 @@
+Base Tutoring
+
+Tables -
+
+create table teacher (id serial primary key, name varchar(60), last_name varchar(60), password varchar(100));
+create table student (id serial primary key, name varchar(60), last_name varchar(60), password varchar(100));
+create table semester_type (id serial primary key, name varchar(60));
+create table schedule_type (id serial primary key, name varchar(60));
+create table subject (id serial primary key, name varchar(60));
+create table semester (id serial primary key, semester_type integer references semester_type(id), year date);
+create table schedule (id serial primary key, subject integer references schedule(id), begin_hour time, end_hour time, schedule_type integer references schedule_type(id), semester integer references semester(id), visible boolean);
+create table teacher_schedule (id serial primary key, schedule integer references schedule(id), teacher integer references teacher(id));
+create table appointment (id serial primary key, student integer references student(id), schedule integer references schedule(id), teacher integer references teacher(id), subject integer references subject(id), topic varchar (60), day date);
+create table users (id serial primary key, username varchar(100), password varchar(100), created_at date default ('now'::text)::date not null);
+alter table schedule add check (begin_hour > '06:00:00');
+alter table schedule add check (end_hour > '07:00:00');
+
+Inserts -
+
+insert into teacher (name, last_name, password) values ('Manuel', 'Calleros', 'secret');
+insert into teacher (name, last_name, password) values ('Daniel', 'Perez', 'secret');
+insert into teacher (name, last_name, password) values ('Alvaro', 'Andrade', 'secret');
+insert into teacher (name, last_name, password) values ('Avel', 'Amado', 'secret');
+insert into teacher (name, last_name, password) values ('Gilberto', 'Hernandez', 'secret');
+insert into teacher (name, last_name, password) values ('Erika', 'Ramirez', 'secret');
+insert into teacher (name, last_name, password) values ('Soledad', 'Rios', 'secret');
+
+insert into student (name, last_name, password) values ('Eduardo', 'Luna', 'secret');
+insert into student (name, last_name, password) values ('Jota Pe', 'Flores', 'secret');
+insert into student (name, last_name, password) values ('Joel', 'Ramirez', 'secret');
+insert into student (name, last_name, password) values ('Jesus', 'Miron', 'secret');
+insert into student (name, last_name, password) values ('Julian', 'Huerta', 'secret');
+insert into student (name, last_name, password) values ('Enrique', 'Lozada', 'secret');
+insert into student (name, last_name, password) values ('Alehandro', 'Tovar', 'secret');
+
+insert into semester_type (name) values ('Enero - Mayo');
+insert into semester_type (name) values ('Verano');
+insert into semester_type (name) values ('Agosto - Diciembre');
+
+insert into schedule_type (name) values ('Classes');
+insert into schedule_type (name) values ('Tutoring');
+insert into schedule_type (name) values ('Possible tutoring');
+
+insert into subject (name) values ('Math');
+insert into subject (name) values ('Data Bases');
+insert into subject (name) values ('Linear Algebra');
+insert into subject (name) values ('Quality of Software');
+insert into subject (name) values ('Devices');
+insert into subject (name) values ('Networks');
+
+insert into semester (semester_type, year) values (3, '2016-01-01');
+insert into semester (semester_type, year) values (2, '2016-01-01');
+insert into semester (semester_type, year) values (1, '2017-01-01');
+
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('11:00:00', '12:30:00', 1, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('12:30:00', '14:00:00', 2, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('14:00:00', '15:30:00', 3, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('08:00:00', '09:30:00', 1, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('10:00:00', '11:30:00', 2, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('16:00:00', '17:30:00', 3, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('17:00:00', '18:30:00', 1, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('09:00:00', '10:30:00', 2, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('10:30:00', '12:30:00', 3, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('07:00:00', '08:30:00', 1, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('08:30:00', '10:00:00', 2, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('18:00:00', '17:30:00', 3, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('14:00:00', '15:30:00', 1, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('17:00:00', '18:30:00', 2, 3, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('10:00:00', '11:30:00', 3, 3, 2);
+
+insert into teacher_schedule (schedule, teacher) values (1,1);
+insert into teacher_schedule (schedule, teacher) values (2,1);
+insert into teacher_schedule (schedule, teacher) values (3,1);
+insert into teacher_schedule (schedule, teacher) values (4,2);
+insert into teacher_schedule (schedule, teacher) values (5,2);
+insert into teacher_schedule (schedule, teacher) values (6,2);
+insert into teacher_schedule (schedule, teacher) values (7,3);
+insert into teacher_schedule (schedule, teacher) values (8,3);
+insert into teacher_schedule (schedule, teacher) values (9,3);
+insert into teacher_schedule (schedule, teacher) values (10,4);
+insert into teacher_schedule (schedule, teacher) values (11,4);
+insert into teacher_schedule (schedule, teacher) values (12,4);
+insert into teacher_schedule (schedule, teacher) values (13,5);
+insert into teacher_schedule (schedule, teacher) values (14,5);
+insert into teacher_schedule (schedule, teacher) values (15,5);
+insert into teacher_schedule (schedule, teacher) values (10,6);
+insert into teacher_schedule (schedule, teacher) values (11,6);
+insert into teacher_schedule (schedule, teacher) values (12,6);
+insert into teacher_schedule (schedule, teacher) values (13,7);
+insert into teacher_schedule (schedule, teacher) values (14,7);
+insert into teacher_schedule (schedule, teacher) values (15,7);
+
+insert into appointment (student, schedule, teacher, subject, topic, day) values (1, 2, 3, 2, 'Views en postgres', '2017-02-10');
+insert into appointment (student, schedule, teacher, subject, topic, day) values (3, 11, 4, 6, 'Static Routing', '2017-03-05');
+insert into appointment (student, schedule, teacher, subject, topic, day) values (4, 8, 3, 1, 'Derivatives', '2017-03-15');
+insert into appointment (student, schedule, teacher, subject, topic, day) values (2, 14, 7, 5, 'Maps in Xcode', '2017-02-16');
+insert into appointment (student, schedule, teacher, subject, topic, day) values (6, 5, 5, 4, 'Testing java', '2017-02-10');
+insert into appointment (student, schedule, teacher, subject, topic, day) values (5, 11, 6, 3, 'Vectorial Spaces', '2017-02-10');
+insert into appointment (student, schedule, teacher, subject, topic, day) values(1, 1, 1, 1, 'Problemas de matematicas', '2017-05-05');
+
+insert into users (username, password) values ('user0', 'secret');
+
+Views -
+
+create view view_appointment 
+as select student.name as "Student", schedule.begin_hour as "Start", schedule.end_hour as "End", 
+teacher.name as "Teacher", subject.name as "Subject", appointment.topic as "Topic", appointment.day as "Day" 
+from appointment 
+inner join student on (appointment.student = student.id) 
+inner join schedule on (appointment.schedule = schedule.id)
+inner join teacher on (appointment.teacher = teacher.id)
+inner join subject on (appointment.subject = subject.id);
+
+create view view_schedule
+as select teacher.name as "Teacher", schedule_type.name as "Type of schedule", schedule.begin_hour as "Start", schedule.end_hour as "End"
+from teacher_schedule 
+inner join teacher on (teacher_schedule.teacher = teacher.id)
+inner join schedule on (teacher_schedule.schedule = schedule.id)
+inner join schedule_type on (schedule.schedule_type = schedule_type.id);
+
+create view view_semester
+as select semester_type.name as "Period", year as "Year"
+from semester 
+inner join semester_type on (semester.semester_type = semester_type.id);
+
+Transactions -
+
+begin;
+select * from teacher;
+update teacher set name = 'Abel' where name = 'Avel';
+select * from teacher;
+update teacher set last_name = 'Odiado' where name = 'Abel';
+select * from teacher;
+commit;
+
+begin;
+select * from student;
+update student set name =  'Alejandro' where name = 'Alehandro';
+insert into student (name, last_name) values ('Fany', 'Pitol');
+insert into student (name, last_name) values ('Fernanda', 'Montanio');
+select * from student;
+commit;
+
+Functions -
+
+CREATE OR REPLACE FUNCTION how_many_appointments (teacher_name character varying(60) , teacher_last_name character varying(60))
+RETURNS integer AS $total_appointments$
+declare
+	total_appointments integer;
+BEGIN
+    SELECT count(*) into total_appointments FROM appointment, teacher WHERE teacher.id = appointment.teacher AND teacher.name = teacher_name AND teacher.last_name = teacher_last_name;
+    RETURN total_appointments;
+END;
+$total_appointments$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION appointment_insert()
+    RETURNS trigger AS
+$$
+BEGIN
+    INSERT INTO appointment_register(appointment, date) 
+    VALUES(NEW.id, NOW());
+
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER register_appointment
+    AFTER INSERT
+    ON appointment
+    FOR EACH ROW
+    EXECUTE PROCEDURE appointment_insert();
