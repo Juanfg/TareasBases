@@ -113,11 +113,12 @@ inner join teacher on (appointment.teacher = teacher.id)
 inner join subject on (appointment.subject = subject.id);
 
 create view view_schedule
-as select teacher.name as "Teacher", schedule_type.name as "Type of schedule", schedule.begin_hour as "Start", schedule.end_hour as "End"
+as select teacher.name as "Teacher", schedule_type.name as "Type of schedule", schedule.begin_hour as "Start", schedule.end_hour as "End", days.name as "Day"
 from teacher_schedule 
 inner join teacher on (teacher_schedule.teacher = teacher.id)
 inner join schedule on (teacher_schedule.schedule = schedule.id)
-inner join schedule_type on (schedule.schedule_type = schedule_type.id);
+inner join schedule_type on (schedule.schedule_type = schedule_type.id)
+inner join days on (schedule.day = days.id);
 
 create view view_schedule_id
 as select teacher.id as "Id", schedule_type.name as "Type", schedule.begin_hour as "Start", schedule.end_hour as "End", days.name as "Day"

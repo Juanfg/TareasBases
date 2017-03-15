@@ -529,6 +529,26 @@ CREATE VIEW view_schedule AS
 ALTER TABLE view_schedule OWNER TO "Lalo";
 
 --
+-- Name: view_schedule_id; Type: VIEW; Schema: public; Owner: Lalo
+--
+
+CREATE VIEW view_schedule_id AS
+ SELECT teacher.id AS "Id",
+    schedule_type.name AS "Type",
+    schedule.begin_hour AS "Start",
+    schedule.end_hour AS "End",
+    days.name AS "Day"
+   FROM ((((teacher_schedule
+     JOIN teacher ON ((teacher_schedule.teacher = teacher.id)))
+     JOIN schedule ON ((teacher_schedule.schedule = schedule.id)))
+     JOIN schedule_type ON ((schedule.schedule_type = schedule_type.id)))
+     JOIN days ON ((schedule.day = days.id)))
+  ORDER BY days.id;
+
+
+ALTER TABLE view_schedule_id OWNER TO "Lalo";
+
+--
 -- Name: view_semester; Type: VIEW; Schema: public; Owner: Lalo
 --
 

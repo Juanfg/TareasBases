@@ -16,6 +16,7 @@
                 }
                 else {
                     $teacher_id = filter_input(INPUT_POST, 'id_teacher');
+                    $_SESSION['id_teacher'] = $teacher_id;
                 }
 
                 $db = new Database;
@@ -25,23 +26,30 @@
                 $schedules = $Teacher->schedules($teacher_id);
             ?>
             <h3>Hello <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
-            <table class="table">
-                <th>Day</th>
-                <th>Type</th>
-                <th>Begin Hour</th>
-                <th>End Hour</th>
-
-                <?php
-                    foreach ($schedules as $schedule) {
-                        echo "<tr>";
-                        echo "<td>" . $schedule->Day . "</td>";
-                        echo "<td>" . $schedule->Type . "</td>";
-                        echo "<td>" . $schedule->Start . "</td>";
-                        echo "<td>" . $schedule->End . "</td>";
-                        echo "<tr>";
-                    }
-                ?>
-            </table>
+            <h3 class="text-center text-info">What do you want to do?</h3>
+            <br>
+            <div class="col-md-12">
+                <!--<form action="">
+                <input type="hidden" value="">
+                <input type="submit" class="btn btn-success btn-block btn-md" value="New Appointment">
+                </form>-->
+                <a class="btn btn-success btn-block btn-md" href="#">Register Schedule</a>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <a class="btn btn-success btn-block btn-md" href="teacher_schedule.php">View my Schedule</a>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <a class="btn btn-success btn-block btn-md" href="#">Check Appointments This Month</a>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <a class="btn btn-success btn-block btn-md" href="#">Check Appointments This Week</a>
+            </div>
             <br>
             <br>
             <div class="col-md-12">

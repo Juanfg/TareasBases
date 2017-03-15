@@ -8,17 +8,22 @@
 <body>
     <div class="container">
         <div class="col-md-12">
-            <h3 class="text-center text-info">Select your teacher</h3>
+            <h3 class="text-center text-info">Select your student</h3>
+            <br>
             <div class="col-md-12">
-                <form action="teacher_menu.php" method="post">
-                    <select name="id_teacher" class="form-control">
+                <form action="student_menu.php" method="post">
+                    <select name="id_student" class="form-control">
                         <?php
-                            require_once '../models/Teacher.php';
+                            require_once '../models/Student.php';
+                            session_start();
+                            if (isset($_SESSION['id_student'])) {
+                                unset($_SESSION['id_student']);
+                            }
                             $db = new Database;
-                            $Teacher = new Teacher($db);
-                            $teachers = $Teacher->get();
-                            foreach ($teachers as $teacher) {
-                                echo '<option value="' . $teacher->id . '">' . $teacher->name . ' ' . $teacher->last_name . '</option>';
+                            $Student= new Student($db);
+                            $students = $Student->get();
+                            foreach ($students as $student) {
+                                echo '<option value="' . $student->id . '">' . $student->name . ' ' . $student->last_name . '</option>';
                             }
                         ?>
                     </select>

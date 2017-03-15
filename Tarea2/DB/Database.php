@@ -2,13 +2,13 @@
 class Database extends PDO{
  
 	//dbname
-	private $dbname = "tutoring";
+	private $dbname = "usuario0";
 	//host
 	private $host 	= "localhost";
 	//user database
-	private $user 	= "juanf";
+	private $user 	= "postgres";
 	//password user
-	private $pass 	= 'a';
+	private $pass 	= '1423qrwe';
 	//port
 	private $port 	= 5432;
     //instance
