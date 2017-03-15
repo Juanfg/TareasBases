@@ -1,4 +1,8 @@
 <?php
+
+    function alert($msg) {
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
     session_start();
     require_once "../models/Schedule.php";
     if (empty($_POST['submit']))
@@ -18,6 +22,22 @@
     $post = (object)filter_input_array(INPUT_POST, $args);
 
     $db = new Database;
+
+    $query = $db->prepare('SELECT schedule.begin_hour as start, schedule.end_hour as end, schedule.day as day FROM schedule, teacher_schedule,
+                        teacher WHERE teacher_schedule.teacher = teacher.id AND teacher_schedule.schedule = schedule.id AND teacher.id = ?');
+    $query->bindParam(1, $_SESSION['id_teacher'], PDO::PARAM_INT);
+    $query->execute();
+    $ss = $query->fetchAll(PDO::FETCH_OBJ);
+    foreach ($ss as $s) {
+        if (strcmp($s->day, $post->day) == 0) {
+            if (($s->start <= $post->begin && $s->end > $post->begin) || ($s->start < $post->end && $s->end >= $post->end)) {
+                alert('You cannot put that hour');
+                // header("Location:add_schedule.php");
+                exit;
+            }
+        }
+    }
+
     $schedule = new Schedule($db);
     $schedule->setType($post->type);
     $schedule->setTeacher($_SESSION['id_teacher']);
