@@ -1,8 +1,4 @@
 <?php
-
-    function alert($msg) {
-        echo "<script type='text/javascript'>alert('$msg');</script>";
-    }
     session_start();
     require_once "../models/Schedule.php";
     if (empty($_POST['submit']))
@@ -31,8 +27,7 @@
     foreach ($ss as $s) {
         if (strcmp($s->day, $post->day) == 0) {
             if (($s->start <= $post->begin && $s->end > $post->begin) || ($s->start < $post->end && $s->end >= $post->end)) {
-                alert('You cannot put that hour');
-                // header("Location:add_schedule.php");
+                header("Location:add_schedule.php?id=1");
                 exit;
             }
         }

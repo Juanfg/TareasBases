@@ -9,6 +9,15 @@
     <div class="container">
         <div class="col-md-12">
             <?php
+                function alert($msg) {
+                    echo "<script type='text/javascript'>alert('$msg');</script>";
+                }
+            
+                if (isset($_GET['id']))
+                {
+                    alert("That hour is already registered");
+                }
+
                 require_once '../models/Teacher.php';
                 require_once '../models/Day.php';
                 require_once '../models/Schedule_Type.php';
