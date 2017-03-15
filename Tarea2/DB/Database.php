@@ -8,7 +8,7 @@ class Database extends PDO{
 	//user database
 	private $user 	= "postgres";
 	//password user
-	private $pass 	= '1423qrwe';
+	private $pass 	= 'hormonadeplato52';
 	//port
 	private $port 	= 5432;
     //instance
