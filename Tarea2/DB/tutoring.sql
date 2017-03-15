@@ -143,6 +143,39 @@ ALTER SEQUENCE appointment_register_id_seq OWNED BY appointment_register.id;
 
 
 --
+-- Name: days; Type: TABLE; Schema: public; Owner: Lalo
+--
+
+CREATE TABLE days (
+    id integer NOT NULL,
+    name character varying(20)
+);
+
+
+ALTER TABLE days OWNER TO "Lalo";
+
+--
+-- Name: days_id_seq; Type: SEQUENCE; Schema: public; Owner: Lalo
+--
+
+CREATE SEQUENCE days_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE days_id_seq OWNER TO "Lalo";
+
+--
+-- Name: days_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Lalo
+--
+
+ALTER SEQUENCE days_id_seq OWNED BY days.id;
+
+
+--
 -- Name: schedule; Type: TABLE; Schema: public; Owner: Lalo
 --
 
@@ -154,6 +187,7 @@ CREATE TABLE schedule (
     semester integer,
     subject integer,
     visible boolean,
+    day integer,
     CONSTRAINT schedule_begin_hour_check CHECK ((begin_hour > '06:00:00'::time without time zone)),
     CONSTRAINT schedule_end_hour_check CHECK ((end_hour > '07:00:00'::time without time zone))
 );
@@ -483,11 +517,13 @@ CREATE VIEW view_schedule AS
  SELECT teacher.name AS "Teacher",
     schedule_type.name AS "Type of schedule",
     schedule.begin_hour AS "Start",
-    schedule.end_hour AS "End"
-   FROM (((teacher_schedule
+    schedule.end_hour AS "End",
+    days.name AS "Day"
+   FROM ((((teacher_schedule
      JOIN teacher ON ((teacher_schedule.teacher = teacher.id)))
      JOIN schedule ON ((teacher_schedule.schedule = schedule.id)))
-     JOIN schedule_type ON ((schedule.schedule_type = schedule_type.id)));
+     JOIN schedule_type ON ((schedule.schedule_type = schedule_type.id)))
+     JOIN days ON ((schedule.day = days.id)));
 
 
 ALTER TABLE view_schedule OWNER TO "Lalo";
@@ -517,6 +553,13 @@ ALTER TABLE ONLY appointment ALTER COLUMN id SET DEFAULT nextval('appointment_id
 --
 
 ALTER TABLE ONLY appointment_register ALTER COLUMN id SET DEFAULT nextval('appointment_register_id_seq'::regclass);
+
+
+--
+-- Name: days id; Type: DEFAULT; Schema: public; Owner: Lalo
+--
+
+ALTER TABLE ONLY days ALTER COLUMN id SET DEFAULT nextval('days_id_seq'::regclass);
 
 
 --
@@ -621,25 +664,47 @@ SELECT pg_catalog.setval('appointment_register_id_seq', 1, true);
 
 
 --
+-- Data for Name: days; Type: TABLE DATA; Schema: public; Owner: Lalo
+--
+
+COPY days (id, name) FROM stdin;
+1	Sunday
+2	Monday
+3	Tuesday
+4	Wednesday
+5	Thursday
+6	Friday
+7	Saturday
+\.
+
+
+--
+-- Name: days_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Lalo
+--
+
+SELECT pg_catalog.setval('days_id_seq', 7, true);
+
+
+--
 -- Data for Name: schedule; Type: TABLE DATA; Schema: public; Owner: Lalo
 --
 
-COPY schedule (id, begin_hour, end_hour, schedule_type, semester, subject, visible) FROM stdin;
-1	11:00:00	12:30:00	1	3	2	t
-2	12:30:00	14:00:00	2	3	2	t
-3	14:00:00	15:30:00	3	3	2	t
-4	08:00:00	09:30:00	1	3	2	t
-5	10:00:00	11:30:00	2	3	2	t
-6	16:00:00	17:30:00	3	3	2	t
-7	17:00:00	18:30:00	1	3	2	t
-8	09:00:00	10:30:00	2	3	2	t
-9	10:30:00	12:30:00	3	3	2	t
-10	07:00:00	08:30:00	1	3	2	t
-11	08:30:00	10:00:00	2	3	2	t
-12	18:00:00	17:30:00	3	3	2	t
-13	14:00:00	15:30:00	1	3	2	t
-14	17:00:00	18:30:00	2	3	2	t
-15	10:00:00	11:30:00	3	3	2	t
+COPY schedule (id, begin_hour, end_hour, schedule_type, semester, subject, visible, day) FROM stdin;
+4	08:00:00	09:30:00	1	3	2	t	2
+6	16:00:00	17:30:00	3	3	2	t	2
+8	09:00:00	10:30:00	2	3	2	t	2
+2	12:30:00	14:00:00	2	3	2	t	3
+5	10:00:00	11:30:00	2	3	2	t	3
+10	07:00:00	08:30:00	1	3	2	t	3
+15	10:00:00	11:30:00	3	3	2	t	5
+7	17:00:00	18:30:00	1	3	2	t	4
+13	14:00:00	15:30:00	1	3	2	t	4
+9	10:30:00	12:30:00	3	3	2	t	3
+12	18:00:00	17:30:00	3	3	2	t	2
+14	17:00:00	18:30:00	2	3	2	t	6
+11	08:30:00	10:00:00	2	3	2	t	6
+1	11:00:00	12:30:00	1	3	2	t	6
+3	14:00:00	15:30:00	3	3	2	t	6
 \.
 
 
@@ -840,6 +905,14 @@ ALTER TABLE ONLY appointment_register
 
 
 --
+-- Name: days days_pkey; Type: CONSTRAINT; Schema: public; Owner: Lalo
+--
+
+ALTER TABLE ONLY days
+    ADD CONSTRAINT days_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schedule schedule_pkey; Type: CONSTRAINT; Schema: public; Owner: Lalo
 --
 
@@ -956,6 +1029,14 @@ ALTER TABLE ONLY appointment
 
 ALTER TABLE ONLY appointment
     ADD CONSTRAINT appointment_teacher_fkey FOREIGN KEY (teacher) REFERENCES teacher(id);
+
+
+--
+-- Name: schedule schedule_day_fkey; Type: FK CONSTRAINT; Schema: public; Owner: Lalo
+--
+
+ALTER TABLE ONLY schedule
+    ADD CONSTRAINT schedule_day_fkey FOREIGN KEY (day) REFERENCES days(id);
 
 
 --

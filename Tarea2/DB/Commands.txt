@@ -12,6 +12,7 @@ create table schedule (id serial primary key, subject integer references schedul
 create table teacher_schedule (id serial primary key, schedule integer references schedule(id), teacher integer references teacher(id));
 create table appointment (id serial primary key, student integer references student(id), schedule integer references schedule(id), teacher integer references teacher(id), subject integer references subject(id), topic varchar (60), day date);
 create table users (id serial primary key, username varchar(100), password varchar(100), created_at date default ('now'::text)::date not null);
+create table appointment_register (id serial primary key, appointment integer references appointment(id), date timestamp);
 alter table schedule add check (begin_hour > '06:00:00');
 alter table schedule add check (end_hour > '07:00:00');
 
