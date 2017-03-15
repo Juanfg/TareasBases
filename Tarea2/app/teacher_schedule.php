@@ -8,7 +8,27 @@
 <body>
     <div class="container">
         <div class="col-md-12">
-            
+            <?php
+                require_once '../models/Teacher.php';
+                session_start();
+                if (isset($_SESSION['id_teacher'])) {
+                    $teacher_id = $_SESSION['id_teacher'];
+                }
+                else {
+                    $teacher_id = filter_input(INPUT_POST, 'id_teacher');
+                }
+                $db = new Database;
+                $Teacher = new Teacher($db);
+                $teacher = $Teacher->getTeacher($teacher_id);
+            ?>
+            <h3>Hello <?php echo $teacher->name ?> </h3>
+            <table class="table">
+                <th>Day</th>
+                <th>Type</th>
+                <th>Begin Hour</th>
+                <th>End Hour</th>
+
+            </table>
         </div>
     </div>
 </body>
