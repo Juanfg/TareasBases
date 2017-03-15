@@ -80,27 +80,7 @@
         }
 
         //obtenemos usuarios de una tabla con postgreSql
-        public function get(){
-            try{
-                if(is_int($this->id)){
-                    $query = $this->con->prepare('SELECT * FROM users WHERE id = ?');
-                    $query->bindParam(1, $this->id, PDO::PARAM_INT);
-                    $query->execute();
-                    $this->con->close();
-                    return $query->fetch(PDO::FETCH_OBJ);
-                }
-                else{
-                    $query = $this->con->prepare('SELECT * FROM users');
-                    $query->execute();
-                    $this->con->close();
-                    return $query->fetchAll(PDO::FETCH_OBJ);
-                }
-            }
-            catch(PDOException $e){
-                echo  $e->getMessage();
-            }
-        }
-
+        
         public function delete(){
             try{
                 $query = $this->con->prepare('DELETE FROM users WHERE id = ?');

@@ -30,7 +30,7 @@
                 <input type="hidden" value="">
                 <input type="submit" class="btn btn-success btn-block btn-md" value="New Appointment">
                 </form>-->
-                <a class="btn btn-success btn-block btn-md" href="new_appointment.php">New Appointment</a>
+                <a class="btn btn-success btn-block btn-md" href="teacher_appointment_select.php">New Appointment</a>
             </div>
             <br>
             <br>

@@ -14,25 +14,24 @@
                 require_once '../models/Schedule_Type.php';
 
                 session_start();
-                if (isset($_SESSION['id_teacher'])) {
-                    $teacher_id = $_SESSION['id_teacher'];
+                if (isset($_SESSION['id_student'])) {
+                    $student_id = $_SESSION['id_student'];
                 }
                 else {
-                    $teacher_id = filter_input(INPUT_POST, 'id_teacher');
+                    $student_id = filter_input(INPUT_POST, 'id_student');
                 }
-
                 $db = new Database;
+                $Student = new Student($db);
+                $student = $Student->getStudent($student_id);
+
                 $Teacher = new Teacher($db);
-                $teacher = $Teacher->getTeacher($teacher_id);
+                $appointments = $Teacher->schedulesAvaliable($teacher_id);
 
-                $Day = new Day($db);
-                $days = $Day->get();
-
-                $Type = new Schedule_Type($db);
-                $types = $Type->get();
+                $Subject = new Subject($db);
+                $subjects = $Teacher->get();
 
             ?>
-            <h3>Hello <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
+            <h3>Hello <?php echo $student->name ?> </h3>
 
             <form action="save_schedule.php" method="post">            
                 <label for="day">Day of the Week:</label>
