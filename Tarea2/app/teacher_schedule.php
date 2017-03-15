@@ -17,17 +17,30 @@
                 else {
                     $teacher_id = filter_input(INPUT_POST, 'id_teacher');
                 }
+
                 $db = new Database;
                 $Teacher = new Teacher($db);
                 $teacher = $Teacher->getTeacher($teacher_id);
+
+                $schedules = $Teacher->schedules($teacher_id);
             ?>
-            <h3>Hello <?php echo $teacher->name ?> </h3>
+            <h3>Hello <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
             <table class="table">
                 <th>Day</th>
                 <th>Type</th>
                 <th>Begin Hour</th>
                 <th>End Hour</th>
 
+                <?php
+                    foreach ($schedules as $schedule) {
+                        echo "<tr>";
+                        echo "<td>" . $schedule->Day . "</td>";
+                        echo "<td>" . $schedule->Type . "</td>";
+                        echo "<td>" . $schedule->Start . "</td>";
+                        echo "<td>" . $schedule->End . "</td>";
+                        echo "<tr>";
+                    }
+                ?>
             </table>
         </div>
     </div>

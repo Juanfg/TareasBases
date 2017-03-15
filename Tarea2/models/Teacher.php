@@ -39,5 +39,20 @@
                 echo $e->getMessage();
             }
         }
+
+        public function schedules($id)
+        {
+            try {
+                $query = 'SELECT * FROM view_schedule_id WHERE "Id" = ?';
+                $q = $this->connection->prepare($query);
+                $q->bindParam(1, $id, PDO::PARAM_INT);
+                $q->execute();
+                $this->connection->close();
+                return $q->fetchAll(PDO::FETCH_OBJ);
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
     }
 ?>
