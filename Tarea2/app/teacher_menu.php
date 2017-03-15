@@ -25,7 +25,7 @@
 
                 $schedules = $Teacher->schedules($teacher_id);
             ?>
-            <h3>Hello <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
+            <h3 class="text-center text-info">Welcome <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
             <h3 class="text-center text-info">What do you want to do?</h3>
             <br>
             <div class="col-md-12">
@@ -43,12 +43,12 @@
             <br>
             <br>
             <div class="col-md-12">
-                <a class="btn btn-success btn-block btn-md" href="#">Check Appointments This Month</a>
+                <a class="btn btn-success btn-block btn-md" href="show_appointment_month.php">Check Appointments This Month</a>
             </div>
             <br>
             <br>
             <div class="col-md-12">
-                <a class="btn btn-success btn-block btn-md" href="#">Check Appointments This Week</a>
+                <a class="btn btn-success btn-block btn-md" href="show_appointment_week.php">Check Appointments This Week</a>
             </div>
             <br>
             <br>

@@ -14,6 +14,10 @@
                     <select name="id_teacher" class="form-control">
                         <?php
                             require_once '../models/Teacher.php';
+                            session_start();
+                            if (isset($_SESSION['id_teacher'])) {
+                                unset($_SESSION['id_teacher']);
+                            }
                             $db = new Database;
                             $Teacher = new Teacher($db);
                             $teachers = $Teacher->get();

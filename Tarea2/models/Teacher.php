@@ -54,5 +54,47 @@
                 echo $e->getMessage();
             }
         }
+
+        public function getAppointmentMonth($id)
+        {
+            try {
+                $query = 'SELECT schedule.begin_hour AS "Start", schedule.end_hour AS "End", 
+                student.name AS "Student", subject.name as "Subject", appointment.topic as "Topic", appointment.day as "Day" 
+                from appointment 
+                inner join schedule on (appointment.schedule = schedule.id) 
+                inner join student on (appointment.student = student.id) 
+                inner join subject on (appointment.subject = subject.id)
+                where appointment.teacher = ? and extract(month from now()) = extract(month from appointment.day)';
+                $q = $this->connection->prepare($query);
+                $q->bindParam(1, $id, PDO::PARAM_INT);
+                $q->execute();
+                $this->connection->close();
+                return $q->fetchAll(PDO::FETCH_OBJ);
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        public function getAppointmentWeek($id)
+        {
+            try {
+                $query = 'SELECT schedule.begin_hour AS "Start", schedule.end_hour AS "End", 
+                student.name AS "Student", subject.name as "Subject", appointment.topic as "Topic", appointment.day as "Day" 
+                from appointment 
+                inner join schedule on (appointment.schedule = schedule.id) 
+                inner join student on (appointment.student = student.id) 
+                inner join subject on (appointment.subject = subject.id)
+                where appointment.teacher = ? and extract(week from now()) = extract(week from appointment.day)';
+                $q = $this->connection->prepare($query);
+                $q->bindParam(1, $id, PDO::PARAM_INT);
+                $q->execute();
+                $this->connection->close();
+                return $q->fetchAll(PDO::FETCH_OBJ);
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
     }
 ?>

@@ -35,7 +35,7 @@
             <br>
             <br>
             <div class="col-md-12">
-                <a class="btn btn-success btn-block btn-md" href="show_appointment.php">Check Scheduled Appointments</a>
+                <a class="btn btn-success btn-block btn-md" href="show_appointment_student.php">Check Scheduled Appointments</a>
             </div>
             <br>
             <br>
