@@ -125,7 +125,8 @@ from teacher_schedule
 inner join teacher on (teacher_schedule.teacher = teacher.id)
 inner join schedule on (teacher_schedule.schedule = schedule.id)
 inner join schedule_type on (schedule.schedule_type = schedule_type.id)
-inner join days on (schedule.day = days.id);
+inner join days on (schedule.day = days.id)
+order by days.id;
 
 create view view_semester
 as select semester_type.name as "Period", year as "Year"
