@@ -1,8 +1,8 @@
 <?php
     require_once "../DB/Database.php";
-    require_once "../interfaces/IDay.php";
+    require_once "../interfaces/ISubject.php";
 
-    class Day implements IDay
+    class Subject implements ISubject
     {
         private $connection;
         private $id;
