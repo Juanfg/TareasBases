@@ -26,7 +26,7 @@
     $ss = $query->fetchAll(PDO::FETCH_OBJ);
     foreach ($ss as $s) {
         if (strcmp($s->day, $post->day) == 0) {
-            if (($s->start <= $post->begin && $s->end > $post->begin) || ($s->start < $post->end && $s->end >= $post->end)) {
+            if (($s->start < $post->begin && $s->end > $post->begin) || ($s->start < $post->end && $s->end > $post->end)) {
                 header("Location:add_schedule.php?id=1");
                 exit;
             }

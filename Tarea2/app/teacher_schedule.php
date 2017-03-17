@@ -24,7 +24,8 @@
 
                 $schedules = $Teacher->schedules($teacher_id);
             ?>
-            <h3>Hello <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
+            <h3 class="text-center text-info">Hello <?php echo $teacher->name ?> </h3>
+            <h3 class="text-center text-info">These is your schedule</h3>
             <table class="table">
                 <th>Day</th>
                 <th>Type</th>
@@ -45,7 +46,7 @@
             <br>
             <br>
             <div class="col-md-12">
-                <a class="btn btn-danger btn-block btn-md" href="teacher_select.php">Return</a>
+                <a class="btn btn-danger btn-block btn-md" href="teacher_menu.php">Return</a>
             </div>
         </div>
     </div>

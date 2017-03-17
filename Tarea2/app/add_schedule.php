@@ -15,7 +15,8 @@
             
                 if (isset($_GET['id']))
                 {
-                    alert("That hour is already registered");
+                    if($_GET['id'] == 1)
+                        alert("That hour is already registered");
                 }
 
                 require_once '../models/Teacher.php';
@@ -41,7 +42,8 @@
                 $types = $Type->get();
 
             ?>
-            <h3>Hello <?php echo $teacher->name . " " . $teacher->last_name?> </h3>
+            <h3 class="text-center text-info">Hello <?php echo $teacher->name ?> </h3>
+            <h3 class="text-center text-info">You can add a new schedule here</h3>
 
             <form action="save_schedule.php" method="post">            
                 <label for="day">Day of the Week:</label>
