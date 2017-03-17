@@ -19,6 +19,17 @@
     $post = (object)filter_input_array(INPUT_POST, $args);
 
     $db = new Database;
+    $query = $db->prepare('SELECT days.name from schedule inner join days on (schedule.day = days.id) where schedule.id = ?');
+    $query->bindParam(1, $post->schedule, PDO::PARAM_INT);
+    $query->execute();
+    $ss = $query->fetch(PDO::FETCH_OBJ);
+
+    $datete = date('l', strtotime($post->day));
+    if (strcmp($ss->name, $datete) != 0) {
+        header("Location:teacher_appointment_select.php?id=1");
+        exit;
+    }
+    
     $appointment = new Appointment($db);
     $appointment->setStudent($_SESSION['id_student']);
     $appointment->setSchedule($post->schedule);

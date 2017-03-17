@@ -14,6 +14,7 @@
                 require_once '../models/Subject.php';
                 require_once '../models/Day.php';
 
+
                 $prueba = filter_input(INPUT_POST, 'prueba');
                 session_start();
                 if (isset($_SESSION['id_student'])) {

@@ -9,8 +9,20 @@
     <div class="container">
         <div class="col-md-12">
             <?php
+
                 require_once '../models/Student.php';
                 require_once '../models/Teacher.php';
+
+                function alert ($msg) {
+                    echo "<script type='text/javascript'>alert('$msg');</script>";
+                }
+
+                if (isset($_GET['id']))
+                {
+                    if ($_GET['id'] == 1)
+                        alert("That day is not correct");
+                }
+                
                 session_start();
                 if (isset($_SESSION['id_teacher'])) {
                     // unset($_SESSION['id_teacher']);
