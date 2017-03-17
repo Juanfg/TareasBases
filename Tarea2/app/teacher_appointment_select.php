@@ -12,6 +12,10 @@
                 require_once '../models/Student.php';
                 require_once '../models/Teacher.php';
                 session_start();
+                if (isset($_SESSION['id_teacher'])) {
+                    // unset($_SESSION['id_teacher']);
+                    $teacher_id = $_SESSION['id_student'];
+                }
                 if (isset($_SESSION['id_student'])) {
                     $student_id = $_SESSION['id_student'];
                 }
@@ -29,16 +33,16 @@
             <h3 class="text-center text-info">Select the teacher for your appointment</h3>
             <form action="add_appointment.php" method="post">            
                 <label for="teacher">Teacher:</label>
-                <select name="teacher" class="form-control">
+                <select name="id_teacher" class="form-control">
                     <?php
                         foreach ($teachers as $teacher) {
                             echo '<option value="' . $teacher->id . '">' . $teacher->name ." ". $teacher->last_name . '</option>'; 
                         }
                     ?>
                 </select>
+                <br>
+                <input class="btn btn-success btn-block btn-md" type="submit" value="Next"></input>
             </form>
-            <br>
-            <a class="btn btn-success btn-block btn-md" href="add_appointment.php">Next</a>
             <br>
             <a class="btn btn-danger btn-block btn-md" href="student_menu.php">Return</a>
         </div>

@@ -14,15 +14,16 @@
                 require_once '../models/Subject.php';
                 require_once '../models/Day.php';
 
+                $prueba = filter_input(INPUT_POST, 'prueba');
                 session_start();
                 if (isset($_SESSION['id_student'])) {
                     $student_id = $_SESSION['id_student'];
-                    $teacher_id = $_SESSION['id_teacher'];
                 }
                 else {
                     $student_id = filter_input(INPUT_POST, 'id_student');
-                    $teacher_id = filter_input(INPUT_POST, 'id_teacher');
                 }
+                $teacher_id = filter_input(INPUT_POST, 'id_teacher');
+
                 $db = new Database;
                 $Student = new Student($db);
                 $student = $Student->getStudent($student_id);
@@ -48,8 +49,8 @@
                     ?>
                 </select>
                 <br>
-                <label for="Subject">Subject:</label>
-                <select name="type"class="form-control">
+                <label for="subject">Subject:</label>
+                <select name="subject"class="form-control">
                     <?php
                         foreach($subjects as $subject) {
                             echo '<option value="' . $subject->id . '">' . $subject->name . '</option>'; 
@@ -59,11 +60,10 @@
                 <br>
                 <label for="Topic">Topic:</label>
                 <input type="text" name="topic" class="form-control">
-                </select>
                 <br>
                 <label for="Day">Date:</label>
                 <input type="date" name="day" class="form-control">
-                </select>
+                <input type="hidden" name="teacher" value="<?php echo $teacher_id ?>">
                 <br>
                 <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Seleccionar"></input>
             </form>
