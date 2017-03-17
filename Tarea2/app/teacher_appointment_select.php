@@ -26,7 +26,7 @@
                 $teachers = $Teacher->get();
             ?>
             <h3 class="text-center text-info">Hello <?php echo $student->name ?> </h3>
-            <h3 class="text-center text-info">Select the teacher for your tutoring session</h3>
+            <h3 class="text-center text-info">Select the teacher for your appointment</h3>
             <form action="add_appointment.php" method="post">            
                 <label for="teacher">Teacher:</label>
                 <select name="teacher" class="form-control">

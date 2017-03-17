@@ -529,6 +529,27 @@ CREATE VIEW view_schedule AS
 ALTER TABLE view_schedule OWNER TO "Lalo";
 
 --
+-- Name: view_schedule_avaliable; Type: VIEW; Schema: public; Owner: Lalo
+--
+
+CREATE VIEW view_schedule_avaliable AS
+ SELECT schedule.id AS "Id",
+    teacher.id AS "Teacher",
+    schedule.schedule_type AS "Type",
+    schedule.begin_hour AS "Start",
+    schedule.end_hour AS "End",
+    schedule.day AS "DayId",
+    days.name AS "Day"
+   FROM (((teacher_schedule
+     JOIN teacher ON ((teacher_schedule.teacher = teacher.id)))
+     JOIN schedule ON ((teacher_schedule.schedule = schedule.id)))
+     JOIN days ON ((schedule.day = days.id)))
+  WHERE ((schedule.schedule_type = 2) OR (schedule.schedule_type = 3));
+
+
+ALTER TABLE view_schedule_avaliable OWNER TO "Lalo";
+
+--
 -- Name: view_schedule_id; Type: VIEW; Schema: public; Owner: Lalo
 --
 

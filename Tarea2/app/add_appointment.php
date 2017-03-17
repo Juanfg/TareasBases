@@ -9,59 +9,66 @@
     <div class="container">
         <div class="col-md-12">
             <?php
+                require_once '../models/Student.php';
                 require_once '../models/Teacher.php';
+                require_once '../models/Subject.php';
                 require_once '../models/Day.php';
-                require_once '../models/Schedule_Type.php';
 
                 session_start();
                 if (isset($_SESSION['id_student'])) {
                     $student_id = $_SESSION['id_student'];
+                    $teacher_id = $_SESSION['id_teacher'];
                 }
                 else {
                     $student_id = filter_input(INPUT_POST, 'id_student');
+                    $teacher_id = filter_input(INPUT_POST, 'id_teacher');
                 }
                 $db = new Database;
                 $Student = new Student($db);
                 $student = $Student->getStudent($student_id);
 
                 $Teacher = new Teacher($db);
+                $teacher = $Teacher->getTeacher($teacher_id);
                 $appointments = $Teacher->schedulesAvaliable($teacher_id);
 
                 $Subject = new Subject($db);
-                $subjects = $Teacher->get();
+                $subjects = $Subject->get();
 
             ?>
-            <h3>Hello <?php echo $student->name ?> </h3>
+            <h3 class="text-center text-info">Hello <?php echo $student->name ?> </h3>
+            <h3 class="text-center text-info">Select the info for your appointment</h3>
 
-            <form action="save_schedule.php" method="post">            
-                <label for="day">Day of the Week:</label>
-                <select name="day" class="form-control">
+            <form action="save_appointment.php" method="post">            
+                <label for="schedule">Schedule:</label>
+                <select name="schedule" class="form-control">
                     <?php
-                        foreach ($days as $day) {
-                            echo '<option value="' . $day->id . '">' . $day->name . '</option>'; 
+                        foreach ($appointments as $appointment) {
+                            echo '<option value="' . $appointment->Id . '">' . $appointment->Start . " " . $appointment->End . " " . $appointment->Day . '</option>'; 
                         }
                     ?>
                 </select>
                 <br>
-                <label for="schedule_type">Schedule Type:</label>
+                <label for="Subject">Subject:</label>
                 <select name="type"class="form-control">
                     <?php
-                        foreach($types as $type) {
-                            echo '<option value="' . $type->id . '">' . $type->name . '</option>'; 
+                        foreach($subjects as $subject) {
+                            echo '<option value="' . $subject->id . '">' . $subject->name . '</option>'; 
                         }                        
                     ?>
                 </select>
                 <br>
-                <label for="begin_hour">Begin Hour:</label>
-                <input type="time" name="begin" class="form-control">
+                <label for="Topic">Topic:</label>
+                <input type="text" name="topic" class="form-control">
+                </select>
                 <br>
-                <label for="end_hour">End Hour:</label>
-                <input type="time" name="end" class="form-control">
+                <label for="Day">Date:</label>
+                <input type="date" name="day" class="form-control">
+                </select>
                 <br>
                 <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Seleccionar"></input>
             </form>
             <br>
-            <a class="btn btn-danger btn-block btn-md" href="teacher_menu.php">Return</a>
+            <a class="btn btn-danger btn-block btn-md" href="teacher_appointment_select.php">Return</a>
         </div>
     </div>
 </body>
