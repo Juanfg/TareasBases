@@ -26,7 +26,7 @@
                 session_start();
                 if (isset($_SESSION['id_teacher'])) {
                     // unset($_SESSION['id_teacher']);
-                    $teacher_id = $_SESSION['id_student'];
+                    $teacher_id = $_SESSION['id_teacher'];
                 }
                 if (isset($_SESSION['id_student'])) {
                     $student_id = $_SESSION['id_student'];
