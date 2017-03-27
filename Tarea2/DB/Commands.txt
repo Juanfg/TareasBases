@@ -2,37 +2,122 @@ Base Tutoring
 
 Tables -
 
-create table teacher (id serial primary key, name varchar(60), last_name varchar(60), password varchar(100));
-create table student (id serial primary key, name varchar(60), last_name varchar(60), password varchar(100));
-create table semester_type (id serial primary key, name varchar(60));
-create table schedule_type (id serial primary key, name varchar(60));
-create table subject (id serial primary key, name varchar(60));
-create table semester (id serial primary key, semester_type integer references semester_type(id), year date);
-create table schedule (id serial primary key, subject integer references schedule(id), begin_hour time, end_hour time, schedule_type integer references schedule_type(id), semester integer references semester(id), visible boolean);
-create table teacher_schedule (id serial primary key, schedule integer references schedule(id), teacher integer references teacher(id));
-create table appointment (id serial primary key, student integer references student(id), schedule integer references schedule(id), teacher integer references teacher(id), subject integer references subject(id), topic varchar (60), day date);
-create table users (id serial primary key, username varchar(100), password varchar(100), created_at date default ('now'::text)::date not null);
-create table appointment_register (id serial primary key, appointment integer references appointment(id), date timestamp);
+create table teacher (
+    id serial primary key, 
+    name varchar(60), 
+    last_name varchar(60), 
+    user integer references users(id) on update cascade on delete cascade
+);
+
+create table student (
+    id serial primary key, 
+    name varchar(60), 
+    last_name varchar(60), 
+    user integer references users(id) on update cascade on delete cascade
+);
+
+create table semester_type (
+    id serial primary key, 
+    name varchar(60)
+);
+
+create table schedule_type (
+    id serial primary key, 
+    name varchar(60)
+);
+
+create table subject (
+    id serial primary key, 
+    name varchar(60)
+);
+
+create table semester (
+    id serial primary key, 
+    semester_type integer references semester_type(id) on update cascade on delete cascade, 
+    year date
+);
+
+create table schedule (
+    id serial primary key, 
+    subject integer references schedule(id) on update cascade on delete cascade, 
+    begin_hour time, 
+    end_hour time, 
+    schedule_type integer references schedule_type(id) on update cascade on delete cascade, 
+    semester integer references semester(id) on update cascade on delete cascade, 
+    visible boolean, 
+    day integer references days(id) on update cascade on delete cascade
+);
+
+create table teacher_schedule (
+    id serial primary key, 
+    schedule integer references schedule(id) on update cascade on delete cascade, 
+    teacher integer references teacher(id) on update cascade on delete cascade
+);
+
+create table appointment (
+    id serial primary key, 
+    student integer references student(id) on update cascade on delete cascade, 
+    schedule integer references schedule(id) on update cascade on delete cascade, 
+    teacher integer references teacher(id) on update cascade on delete cascade, 
+    subject integer references subject(id) on update cascade on delete cascade, 
+    topic varchar (60), 
+    day date
+);
+
+create table users (
+    id serial primary key, 
+    username varchar(100), 
+    password varchar(100), 
+    valid boolean, 
+    token varchar(20), 
+    type integer
+);
+
+create table appointment_register (
+    id serial primary key, 
+    appointment integer references appointment(id) on update cascade on delete cascade, 
+    date timestamp
+);
+
 alter table schedule add check (begin_hour > '06:00:00');
 alter table schedule add check (end_hour > '07:00:00');
 
 Inserts -
 
-insert into teacher (name, last_name, password) values ('Manuel', 'Calleros', 'secret');
-insert into teacher (name, last_name, password) values ('Daniel', 'Perez', 'secret');
-insert into teacher (name, last_name, password) values ('Alvaro', 'Andrade', 'secret');
-insert into teacher (name, last_name, password) values ('Avel', 'Amado', 'secret');
-insert into teacher (name, last_name, password) values ('Gilberto', 'Hernandez', 'secret');
-insert into teacher (name, last_name, password) values ('Erika', 'Ramirez', 'secret');
-insert into teacher (name, last_name, password) values ('Soledad', 'Rios', 'secret');
+insert into teacher (name, last_name, user) values ('Manuel', 'Calleros',2);
+insert into teacher (name, last_name, user) values ('Daniel', 'Perez',3);
+insert into teacher (name, last_name, user) values ('Alvaro', 'Andrade',4);
+insert into teacher (name, last_name, user) values ('Avel', 'Amado',5);
+insert into teacher (name, last_name, user) values ('Gilberto', 'Hernandez',6);
+insert into teacher (name, last_name, user) values ('Erika', 'Ramirez',7);
+insert into teacher (name, last_name, user) values ('Soledad', 'Rios',8);
 
-insert into student (name, last_name, password) values ('Eduardo', 'Luna', 'secret');
-insert into student (name, last_name, password) values ('Jota Pe', 'Flores', 'secret');
-insert into student (name, last_name, password) values ('Joel', 'Ramirez', 'secret');
-insert into student (name, last_name, password) values ('Jesus', 'Miron', 'secret');
-insert into student (name, last_name, password) values ('Julian', 'Huerta', 'secret');
-insert into student (name, last_name, password) values ('Enrique', 'Lozada', 'secret');
-insert into student (name, last_name, password) values ('Alehandro', 'Tovar', 'secret');
+insert into student (name, last_name, user) values ('Eduardo', 'Luna',9);
+insert into student (name, last_name, user) values ('Jota Pe', 'Flores',10);
+insert into student (name, last_name, user) values ('Joel', 'Ramirez',11);
+insert into student (name, last_name, user) values ('Jesus', 'Miron',12);
+insert into student (name, last_name, user) values ('Julian', 'Huerta',13);
+insert into student (name, last_name, user) values ('Enrique', 'Lozada',14);
+insert into student (name, last_name, user) values ('Alehandro', 'Tovar',15);
+
+insert into users (username, password, valid, type) values ('masterdeus@itesm.mx', 'deus', true, 1);
+insert into users (username, password, valid, type) values ('mcalleros@itesm.mx', 'mc2', true, 2);
+insert into users (username, password, valid, type) values ('dperez@itesm.mx', 'dp3', true, 2);
+insert into users (username, password, valid, type) values ('aandrades@itesm.mx', 'aa4', true, 2);
+insert into users (username, password, valid, type) values ('aamado@itesm.mx', 'aa5', true, 2);
+insert into users (username, password, valid, type) values ('ghernandez@itesm.mx', 'gh6', true, 2);
+insert into users (username, password, valid, type) values ('eramirez@itesm.mx', 'er7', true, 2);
+insert into users (username, password, valid, type) values ('srios@itesm.mx', 'sr8', true, 2);
+
+insert into users (username, password, valid, type) values ('elunas@itesm.mx', 'el9', true, 3);
+insert into users (username, password, valid, type) values ('jflores@itesm.mx', 'jf10', true, 3);
+insert into users (username, password, valid, type) values ('jramirez@itesm.mx', 'jr11', true, 3);
+insert into users (username, password, valid, type) values ('jmiron@itesm.mx', 'jm12', true, 3);
+insert into users (username, password, valid, type) values ('jhuerta@itesm.mx', 'jh13', true, 3);
+insert into users (username, password, valid, type) values ('elozada@itesm.mx', 'el14', true, 3);
+insert into users (username, password, valid, type) values ('atovar@itesm.mx', 'at15', true, 3);
+insert into users (username, password, valid, type) values ('fpitol@itesm.mx', 'fp16', true, 3);
+insert into users (username, password, valid, type) values ('fmontano@itesm.mx', 'fm17', true, 3);
 
 insert into semester_type (name) values ('Enero - Mayo');
 insert into semester_type (name) values ('Verano');

@@ -1,5 +1,5 @@
 <?php
-    require_once("../db/Database.php");
+    require_once("../DB/Database.php");
     require_once("../interfaces/ISchedule.php");
 
     class Schedule implements ISchedule {
