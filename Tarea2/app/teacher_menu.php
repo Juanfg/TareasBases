@@ -15,8 +15,7 @@
                     $teacher_id = $_SESSION['id_teacher'];
                 }
                 else {
-                    $teacher_id = filter_input(INPUT_POST, 'id_teacher');
-                    $_SESSION['id_teacher'] = $teacher_id;
+                    header('Location: logout.php');
                 }
 
                 $db = new Database;
@@ -53,7 +52,17 @@
             <br>
             <br>
             <div class="col-md-12">
-                <a class="btn btn-danger btn-block btn-md" href="teacher_select.php">Return</a>
+                <a class="btn btn-success btn-block btn-md" href="show_appointment_interval.php">Check Appointments By Interval</a>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <a class="btn btn-success btn-block btn-md" href="password_teacher.php">Change password</a>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <a class="btn btn-danger btn-block btn-md" href="logout.php">Logout</a>
             </div>
         </div>
     </div>

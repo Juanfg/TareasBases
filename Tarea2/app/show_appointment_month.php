@@ -45,8 +45,6 @@
                     }
                 ?>
             </table>
-            <br>
-            <br>
             <div class="col-md-12">
                 <a class="btn btn-danger btn-block btn-md" href="teacher_menu.php">Return</a>
             </div>

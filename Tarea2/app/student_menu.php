@@ -15,8 +15,7 @@
                     $student_id = $_SESSION['id_student'];
                 }
                 else {
-                    $student_id = filter_input(INPUT_POST, 'id_student');
-                    $_SESSION['id_student'] = $student_id;
+                    header('Location: logout.php');
                 }
                 $db = new Database;
                 $Student = new Student($db);
@@ -40,7 +39,12 @@
             <br>
             <br>
             <div class="col-md-12">
-                <a class="btn btn-danger btn-block btn-md" href="student_select.php">Return</a>
+                <a class="btn btn-success btn-block btn-md" href="password_student.php">Change password</a>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <a class="btn btn-danger btn-block btn-md" href="logout.php">Logout</a>
             </div>
         </div>
     </div>

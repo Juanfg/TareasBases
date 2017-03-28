@@ -25,14 +25,13 @@
                 
                 session_start();
                 if (isset($_SESSION['id_teacher'])) {
-                    // unset($_SESSION['id_teacher']);
                     $teacher_id = $_SESSION['id_teacher'];
                 }
                 if (isset($_SESSION['id_student'])) {
                     $student_id = $_SESSION['id_student'];
                 }
                 else {
-                    $student_id = filter_input(INPUT_POST, 'id_student');
+                    header('Location: logout.php');
                 }
                 $db = new Database;
                 $Student = new Student($db);

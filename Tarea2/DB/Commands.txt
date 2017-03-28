@@ -2,18 +2,27 @@ Base Tutoring
 
 Tables -
 
+create table users (
+    id serial primary key, 
+    username varchar(100), 
+    password varchar(100), 
+    valid boolean, 
+    token varchar(20), 
+    type integer
+);
+
 create table teacher (
     id serial primary key, 
     name varchar(60), 
     last_name varchar(60), 
-    user integer references users(id) on update cascade on delete cascade
+    "user" integer references users(id) on update cascade on delete cascade
 );
 
 create table student (
     id serial primary key, 
     name varchar(60), 
     last_name varchar(60), 
-    user integer references users(id) on update cascade on delete cascade
+    "user" integer references users(id) on update cascade on delete cascade
 );
 
 create table semester_type (
@@ -37,9 +46,14 @@ create table semester (
     year date
 );
 
+create table days (
+    id serial primary key, 
+    name varchar(60)
+);
+
 create table schedule (
     id serial primary key, 
-    subject integer references schedule(id) on update cascade on delete cascade, 
+    subject integer references subject(id) on update cascade on delete cascade, 
     begin_hour time, 
     end_hour time, 
     schedule_type integer references schedule_type(id) on update cascade on delete cascade, 
@@ -64,15 +78,6 @@ create table appointment (
     day date
 );
 
-create table users (
-    id serial primary key, 
-    username varchar(100), 
-    password varchar(100), 
-    valid boolean, 
-    token varchar(20), 
-    type integer
-);
-
 create table appointment_register (
     id serial primary key, 
     appointment integer references appointment(id) on update cascade on delete cascade, 
@@ -84,40 +89,40 @@ alter table schedule add check (end_hour > '07:00:00');
 
 Inserts -
 
-insert into teacher (name, last_name, user) values ('Manuel', 'Calleros',2);
-insert into teacher (name, last_name, user) values ('Daniel', 'Perez',3);
-insert into teacher (name, last_name, user) values ('Alvaro', 'Andrade',4);
-insert into teacher (name, last_name, user) values ('Avel', 'Amado',5);
-insert into teacher (name, last_name, user) values ('Gilberto', 'Hernandez',6);
-insert into teacher (name, last_name, user) values ('Erika', 'Ramirez',7);
-insert into teacher (name, last_name, user) values ('Soledad', 'Rios',8);
+insert into users (username, password, valid, type) values ('masterdeus', '74ace46842e0fb130fa055e5c609dad6de76a208', true, 1);
+insert into users (username, password, valid, type) values ('mcalleros', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
+insert into users (username, password, valid, type) values ('dperez', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
+insert into users (username, password, valid, type) values ('aandrades', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
+insert into users (username, password, valid, type) values ('aamado', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
+insert into users (username, password, valid, type) values ('ghernandez', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
+insert into users (username, password, valid, type) values ('eramirez', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
+insert into users (username, password, valid, type) values ('srios', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 2);
 
-insert into student (name, last_name, user) values ('Eduardo', 'Luna',9);
-insert into student (name, last_name, user) values ('Jota Pe', 'Flores',10);
-insert into student (name, last_name, user) values ('Joel', 'Ramirez',11);
-insert into student (name, last_name, user) values ('Jesus', 'Miron',12);
-insert into student (name, last_name, user) values ('Julian', 'Huerta',13);
-insert into student (name, last_name, user) values ('Enrique', 'Lozada',14);
-insert into student (name, last_name, user) values ('Alehandro', 'Tovar',15);
+insert into users (username, password, valid, type) values ('elunas', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('jflores', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('jramirez', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('jmiron', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('jhuerta', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('elozada', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('atovar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('fpitol', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
+insert into users (username, password, valid, type) values ('fmontano', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', true, 3);
 
-insert into users (username, password, valid, type) values ('masterdeus@itesm.mx', 'deus', true, 1);
-insert into users (username, password, valid, type) values ('mcalleros@itesm.mx', 'mc2', true, 2);
-insert into users (username, password, valid, type) values ('dperez@itesm.mx', 'dp3', true, 2);
-insert into users (username, password, valid, type) values ('aandrades@itesm.mx', 'aa4', true, 2);
-insert into users (username, password, valid, type) values ('aamado@itesm.mx', 'aa5', true, 2);
-insert into users (username, password, valid, type) values ('ghernandez@itesm.mx', 'gh6', true, 2);
-insert into users (username, password, valid, type) values ('eramirez@itesm.mx', 'er7', true, 2);
-insert into users (username, password, valid, type) values ('srios@itesm.mx', 'sr8', true, 2);
+insert into teacher (name, last_name, "user") values ('Manuel', 'Calleros',2);
+insert into teacher (name, last_name, "user") values ('Daniel', 'Perez',3);
+insert into teacher (name, last_name, "user") values ('Alvaro', 'Andrade',4);
+insert into teacher (name, last_name, "user") values ('Avel', 'Amado',5);
+insert into teacher (name, last_name, "user") values ('Gilberto', 'Hernandez',6);
+insert into teacher (name, last_name, "user") values ('Erika', 'Ramirez',7);
+insert into teacher (name, last_name, "user") values ('Soledad', 'Rios',8);
 
-insert into users (username, password, valid, type) values ('elunas@itesm.mx', 'el9', true, 3);
-insert into users (username, password, valid, type) values ('jflores@itesm.mx', 'jf10', true, 3);
-insert into users (username, password, valid, type) values ('jramirez@itesm.mx', 'jr11', true, 3);
-insert into users (username, password, valid, type) values ('jmiron@itesm.mx', 'jm12', true, 3);
-insert into users (username, password, valid, type) values ('jhuerta@itesm.mx', 'jh13', true, 3);
-insert into users (username, password, valid, type) values ('elozada@itesm.mx', 'el14', true, 3);
-insert into users (username, password, valid, type) values ('atovar@itesm.mx', 'at15', true, 3);
-insert into users (username, password, valid, type) values ('fpitol@itesm.mx', 'fp16', true, 3);
-insert into users (username, password, valid, type) values ('fmontano@itesm.mx', 'fm17', true, 3);
+insert into student (name, last_name, "user") values ('Eduardo', 'Luna',9);
+insert into student (name, last_name, "user") values ('Jota Pe', 'Flores',10);
+insert into student (name, last_name, "user") values ('Joel', 'Ramirez',11);
+insert into student (name, last_name, "user") values ('Jesus', 'Miron',12);
+insert into student (name, last_name, "user") values ('Julian', 'Huerta',13);
+insert into student (name, last_name, "user") values ('Enrique', 'Lozada',14);
+insert into student (name, last_name, "user") values ('Alehandro', 'Tovar',15);
 
 insert into semester_type (name) values ('Enero - Mayo');
 insert into semester_type (name) values ('Verano');
@@ -138,21 +143,29 @@ insert into semester (semester_type, year) values (3, '2016-01-01');
 insert into semester (semester_type, year) values (2, '2016-01-01');
 insert into semester (semester_type, year) values (1, '2017-01-01');
 
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('11:00:00', '12:30:00', 1, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('12:30:00', '14:00:00', 2, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('14:00:00', '15:30:00', 3, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('08:00:00', '09:30:00', 1, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('10:00:00', '11:30:00', 2, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('16:00:00', '17:30:00', 3, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('17:00:00', '18:30:00', 1, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('09:00:00', '10:30:00', 2, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('10:30:00', '12:30:00', 3, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('07:00:00', '08:30:00', 1, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('08:30:00', '10:00:00', 2, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('18:00:00', '17:30:00', 3, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('14:00:00', '15:30:00', 1, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('17:00:00', '18:30:00', 2, 3, 2);
-insert into schedule (begin_hour, end_hour, schedule_type, semester) values ('10:00:00', '11:30:00', 3, 3, 2);
+insert into days (name) values ('Sunday');
+insert into days (name) values ('Monday');
+insert into days (name) values ('Tuesday');
+insert into days (name) values ('Wednesday');
+insert into days (name) values ('Thursday');
+insert into days (name) values ('Friday');
+insert into days (name) values ('Saturday');
+
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('11:00:00', '12:30:00', 1, 3, 2, true, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('12:30:00', '14:00:00', 2, 3, 2, true, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('14:00:00', '15:30:00', 3, 3, 2, true, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('08:00:00', '09:30:00', 1, 3, 2, true, 3);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('10:00:00', '11:30:00', 2, 3, 2, true, 3);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('16:00:00', '17:30:00', 3, 3, 2, true, 3);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('17:00:00', '18:30:00', 1, 3, 2, true, 5);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('09:00:00', '10:30:00', 2, 3, 2, true, 4);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('10:30:00', '12:30:00', 3, 3, 2, true, 5);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('07:00:00', '08:30:00', 1, 3, 2, true, 6);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('08:30:00', '10:00:00', 2, 3, 2, true, 3);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('18:00:00', '17:30:00', 3, 3, 2, true, 4);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('14:00:00', '15:30:00', 1, 3, 2, true, 5);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('17:00:00', '18:30:00', 2, 3, 2, true, 2);
+insert into schedule (begin_hour, end_hour, schedule_type, semester, subject, visible, day) values ('10:00:00', '11:30:00', 3, 3, 2, true, 3);
 
 insert into teacher_schedule (schedule, teacher) values (1,1);
 insert into teacher_schedule (schedule, teacher) values (2,1);
@@ -184,7 +197,6 @@ insert into appointment (student, schedule, teacher, subject, topic, day) values
 insert into appointment (student, schedule, teacher, subject, topic, day) values (5, 11, 6, 3, 'Vectorial Spaces', '2017-02-10');
 insert into appointment (student, schedule, teacher, subject, topic, day) values(1, 1, 1, 1, 'Problemas de matematicas', '2017-05-05');
 
-insert into users (username, password) values ('user0', 'secret');
 
 Views -
 

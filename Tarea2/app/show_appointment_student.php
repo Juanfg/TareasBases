@@ -15,7 +15,7 @@
                     $student_id = $_SESSION['id_student'];
                 }
                 else {
-                    $student_id = filter_input(INPUT_POST, 'id_student');
+                    header('Location: logout.php');
                 }
                 $db = new Database;
                 $Student = new Student($db);

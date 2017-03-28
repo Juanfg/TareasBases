@@ -7,6 +7,22 @@
         private $connection;
         private $id;
 
+        private $name;
+        private $lastname;
+        private $user_id;
+
+        public function setName($name){
+            $this->name = $name;
+        }
+
+        public function setLastname($lastname){
+            $this->lastname = $lastname;
+        }
+
+        public function setUser($user_id){
+            $this->user_id = $user_id;
+        }
+
         public function __construct(Database $db)
         {
             $this->connection = new $db;
@@ -15,6 +31,37 @@
         public function setId($id)
         {
             $this->id = $id;
+        }
+
+        public function save() {
+            try{
+                echo $this->user_id;
+                $query = $this->connection->prepare('INSERT INTO student (name, last_name, "user") values (?,?,?)');
+                $query->bindParam(1, $this->name, PDO::PARAM_STR);
+                $query->bindParam(2, $this->lastname, PDO::PARAM_STR);
+                $query->bindParam(3, $this->user_id, PDO::PARAM_INT);
+                $query->execute();
+
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo  $e->getMessage();
+            }
+        }
+
+        public function update() {
+            try{
+                $query = $this->connection->prepare('UPDATE student SET name = ? , last_name = ? WHERE id = ?');
+                $query->bindParam(1, $this->name, PDO::PARAM_STR);
+                $query->bindParam(2, $this->lastname, PDO::PARAM_STR);
+                $query->bindParam(3, $this->id, PDO::PARAM_INT);
+                $query->execute();
+
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo  $e->getMessage();
+            }
         }
 
         public function get()

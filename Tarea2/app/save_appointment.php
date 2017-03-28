@@ -4,7 +4,6 @@
     if (empty($_POST['submit']))
     {
         header("Location:add_appointment.php");
-        exit;
     }
 
     $args = array(
