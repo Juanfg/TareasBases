@@ -69,17 +69,3 @@ create table leagues_teams (
 create table 
 
 FUNCTIONS
-
-CREATE OR REPLACE FUNCTION getPoints()
-    RETURNS trigger AS
-$$
-DECLARE
-    points_value integer
-BEGIN
-    SELECT wins FROM games * 3 AS points_value;
-    UPDATE games set points = points_value;
-    RETURN NEW;
-END;
-$$
-LANGUAGE 'plpgsql';
-
