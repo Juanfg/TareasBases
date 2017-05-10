@@ -67,6 +67,4 @@ create table leagues_teams (
     team_id integer references teams(id) on update cascade on delete cascade
 );
 
-create table 
-
 FUNCTIONS
