@@ -28,7 +28,8 @@ create table games (
     id serial primary key,
     local_id integer references teams(id) on update cascade on delete cascade, 
     visitor_id integer references teams(id) on update cascade on delete cascade, 
-    winner boolean null,
+    local_goals integer default (0), 
+    visitor_goals integer default (0), 
     active boolean default(false),
     date timestamp check(date > now()),
     field_id integer
