@@ -7,49 +7,64 @@
 </head>
 <body>
     <?php
-        require_once '../models/Teacher.php';
         require_once '../models/User.php';
-        require_once '../models/Student.php';
+        require_once '../models/Coach.php';
+        require_once '../models/Player.php';
+        
         session_start();
-        function startLogin($inputUsername, $inputPassword){
-            $db = new Database;
 
-            $Teacher = new Teacher($db);
-            $teachers = $Teacher->get();
-
-            $Student= new Student($db);
-            $students = $Student->get();
+        function startLogin($newEmail, $newPassword){
+            $db = new database;
 
             $User= new User($db);
             $users = $User->get();
 
+            $Coach = new Coach($db);
+            $coaches = $Coach->get();
+
+            $Player= new Player($db);
+            $players = $Player->get();
+
             foreach($users as $user){
-                if(strcmp($inputUsername, $user->username) == 0){
-                    echo $user->token;
-                    if((strcmp(sha1($inputPassword), $user->password)== 0) || (strcmp($inputPassword, $user->token)== 0) ){
+                if(strcmp($newEmail, $user->email) == 0){
+
+                    $pass = false;
+                    $id = 0;
+                    //strcmp(sha1($newPassword)
+                    if($user->valid){
+                        if(strcmp($newPassword, $user->password) == 0){
+                            $pass = true;
+                        }
+                    }
+                    else{
+                        if(strcmp($newPassword, $user->token) == 0){
+                            $pass = true;
+                        }
+                    }
+                    if($pass){
                         switch($user->type){
                             case 1:
-                                $_SESSION['id_admin'] = $user->id;
-                                header('Location: admin.php');
+                                $_SESSION['admin_id'] = $user->id;
+                                header('Location: admin/menu.php');
                                 break;
                             case 2:
-                                $teacher_id;
-                                foreach($teachers as $teacher){
-                                    if(strcmp($teacher->user, $user->id) == 0){
-                                        $teacher_id = $teacher->id;
+                                $coach_id;
+                                foreach($coaches as $coach){
+                                    if(strcmp($coach->user_id, $user->id) == 0){
+                                        $coach_id = $coach->id;
                                     }
                                 }
-                                $_SESSION['id_teacher'] = $teacher_id;
-                                header('Location: teacher_menu.php');
+                                $_SESSION['coach_id'] = $coach_id;
+                                header('Location: coach/menu.php');
                                 break;
                             case 3:
-                                $student_id;
-                                foreach($students as $student){
-                                    if(strcmp($student->user, $user->id) == 0){
-                                        $student_id = $student->id;
+                                $player_id;
+                                foreach($players as $player){
+                                    if(strcmp($player->user_id, $user->id) == 0){
+                                        $player_id = $player->id;
                                     }
                                 }
-                                $_SESSION['id_student'] = $student_id;
+                                $_SESSION['player_id'] = $player_id;
                                 header('Location: student_menu.php');
                                 break;
                         }
@@ -60,18 +75,18 @@
     ?>
     <div class="container">
         <div class="col-md-12">
-            <h3 class="text-center text-info">Welcome to the Consulting Management System</h3>
+            <h3 class="text-center text-info">Welcome to the League System</h3>
             <h3 class="text-center text-info">Please Login</h3>
             <br>
             <?php
                 if (isset($_POST['login'])) {
-                    startLogin($_POST['username'], $_POST['password']);
+                    startLogin($_POST['email'], $_POST['password']);
                 }
             ?>
             <div class="col-md-3">
                 <form action="main.php" method="post">
-                    <label for="Username">Username:</label>
-                        <input type="text" name="username" class="form-control" >
+                    <label for="Email">Email:</label>
+                        <input type="text" name="email" class="form-control" >
                     <br>
                     <label for="Password">Password:</label>
                         <input type="password" name="password" class="form-control" >

@@ -2,9 +2,9 @@ DB
 
 create table users (
     id serial primary key, 
-    username varchar(100), 
+    email varchar(100), 
     password varchar(100), 
-    valid boolean, 
+    valid boolean default(false), 
     token varchar(40), 
     type integer
 );
@@ -42,10 +42,10 @@ create table player (
     user_id integer
 );
 
-create table coach (
+create table coaches (
     id serial primary key, 
     name varchar(30), 
-    team_id integer null references teams(id) on update cascade on delete cascade default(null), 
+    team_id integer null references teams(id) on update cascade on delete cascade, 
     user_id integer
 );
 
@@ -55,16 +55,5 @@ create table admin (
     user_id integer
 );
 
-create table leagues (
-    id serial primary key,
-    name varchar(30),
-    country varchar(30)
-);
-
-create table leagues_teams (
-    id serial primary key,
-    league_id integer references leagues(id) on update cascade on delete cascade, 
-    team_id integer references teams(id) on update cascade on delete cascade
-);
 
 FUNCTIONS
