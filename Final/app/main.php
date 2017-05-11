@@ -2,8 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Login</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../public/css/animate.css">
+    <link href="../public/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../public/css/style.css" rel="stylesheet" />
 </head>
 <body>
     <?php
@@ -73,28 +79,39 @@
             }
         }
     ?>
-    <div class="container">
-        <div class="col-md-12">
-            <h3 class="text-center text-info">Welcome to the League System</h3>
-            <h3 class="text-center text-info">Please Login</h3>
-            <br>
-            <?php
-                if (isset($_POST['login'])) {
-                    startLogin($_POST['email'], $_POST['password']);
-                }
-            ?>
-            <div class="col-md-3">
-                <form action="main.php" method="post">
-                    <label for="Email">Email:</label>
-                        <input type="text" name="email" class="form-control" >
-                    <br>
-                    <label for="Password">Password:</label>
-                        <input type="password" name="password" class="form-control" >
-                    <br>
-                    <input class="btn btn-success btn-block btn-md" type="submit" name="login"></input>
-                </form>
-            </div>
-        </div>
-    </div>
+    <section id="main-slider">
+        <div class="carousel slide">      
+            <div class="carousel-inner">
+                <div class="item active" style="background-image: url(../public/images/slider/bg1.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                            
+                                <div class="carousel-content">
+                                    <h2 class="animation animated-item-1">Welcome to <span>Football Leagues</span></h2>
+                                    <?php
+                                        if (isset($_POST['login'])) {
+                                            startLogin($_POST['email'], $_POST['password']);
+                                        }
+                                    ?>
+                                    <div class="col-md-6">
+                                        <form action="main.php" method="post">
+                                            <label for="Email">Email:</label>
+                                                <input type="text" name="email" class="form-control" >
+                                            <br>
+                                            <label for="Password">Password:</label>
+                                                <input type="password" name="password" class="form-control" >
+                                            <br>
+                                            <input class="btn btn-success btn-block btn-md" type="submit" name="login"></input>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->             
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+    </section><!--/#main-slider-->
 </body>
 </html>
