@@ -57,3 +57,52 @@ create table admin (
 
 
 FUNCTIONS
+
+CREATE OR REPLACE FUNCTION get_games_played (team_id integer)
+RETURNS integer AS $total_games_played$
+declare
+	total_games_played integer;
+BEGIN
+    SELECT wins + loses + ties into total_games_played FROM teams WHERE id = team_id;
+    RETURN total_games_played;
+END;
+$total_games_played$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_team_real (team_id integer, game_result integer)
+RETURNS void as $$
+BEGIN
+    IF game_result = 1 THEN
+        UPDATE teams SET wins = wins + 1, points = points + 3 WHERE id = team_id;
+    ELSEIF game_result = 2 THEN
+        UPDATE teams SET loses = loses + 1 WHERE id = team_id;
+    ELSEIF game_result = 3 THEN
+        UPDATE teams SET ties = ties + 1, points = points + 1 WHERE id = team_id;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_teams()
+RETURNS TRIGGER AS $example$
+BEGIN
+    IF NEW.local_goals > NEW.visitor_goals THEN
+        PERFORM update_team_real (OLD.local_id, 1);
+        PERFORM update_team_real (OLD.visitor_id, 2);
+    ELSEIF NEW.local_goals < NEW.visitor_goals THEN
+        PERFORM update_team_real (OLD.local_id, 2);
+        PERFORM update_team_real (OLD.visitor_id, 1);
+    ELSE
+        PERFORM update_team_real (OLD.local_id, 3);
+        PERFORM update_team_real (OLD.visitor_id, 3);
+    END IF;
+    RETURN NEW;
+END;
+$example$ LANGUAGE plpgsql;
+
+TRIGGERS
+
+CREATE TRIGGER update_local_team
+    AFTER UPDATE ON games
+    FOR EACH ROW
+    WHEN (OLD.active IS DISTINCT FROM NEW.active)
+    EXECUTE PROCEDURE update_teams();
