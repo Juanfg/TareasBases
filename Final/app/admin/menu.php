@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!--Imports css-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +12,22 @@
     <link href="../../public/css/prettyPhoto.css" rel="stylesheet">
     <link href="../../public/css/style.css" rel="stylesheet" />
     <link href="../../public/css/custom.css" rel="stylesheet" />
+    <!--Ene imports-->
 </head>
 <body>
+    <!--User verification-->
+    <?php
+        session_start();
+        if (isset($_SESSION['admin_id'])) {
+            $user_id = $_SESSION['admin_id'];
+        }
+        else {
+            header('Location: ../logout.php');
+        }
+    ?>
+    <!--End verification-->
+    
+    <!--Start topbar-->
     <header>		
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="navigation">
@@ -34,45 +49,38 @@
 			</div>	
 		</nav>		
 	</header>
+    <!--End topbar-->
 
-    <?php
-        session_start();
-        if (isset($_SESSION['admin_id'])) {
-            $user_id = $_SESSION['admin_id'];
-        }
-        else {
-            header('Location: ../logout.php');
-        }
-    ?>
-
+    <!--Start menu-->
     <div class="feature">
 		<div class="container" style="margin-top:120px">
 			<div class="text-center">
             	<div class="col-md-4">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" >
 						<a href="#">
-                            <i class="fa fa-book"></i>	
+                            <i class="fa fa-users"></i>	
                         </a>
 						<h2>Manage teams</h2>
-						<p>Quisque eu ante at tortor imperdiet gravida nec sed turpis phasellus.</p>
+						<p>Edit the teams that belong to this league.</p>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
-						<i class="fa fa-laptop"></i>	
+						<i class="fa fa-calendar"></i>	
 						<h2>Manage schedules</h2>
-						<p>Quisque eu ante at tortor imperdiet gravida nec sed turpis phasellus.</p>
+						<p>Here you can edit the game schedules and register the wins and loses.</p>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div  class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms" >
-						<i class="fa fa-heart-o" href="manage_student.php"></i>	
+						<i class="fa fa-table" href="manage_student.php"></i>	
 						<h2>General table</h2>
-						<p>Quisque eu ante at tortor imperdiet gravida nec sed turpis phasellus.</p>
+						<p>See the information of all the teams.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+    <!--End menu-->
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!--Import css-->
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="../public/css/animate.css">
     <link href="../public/css/prettyPhoto.css" rel="stylesheet">
     <link href="../public/css/style.css" rel="stylesheet" />
+    <!--End imports-->
 </head>
 <body>
     <?php
@@ -71,7 +73,7 @@
                                     }
                                 }
                                 $_SESSION['player_id'] = $player_id;
-                                header('Location: student_menu.php');
+                                header('Location: player/menu.php');
                                 break;
                         }
                     }
