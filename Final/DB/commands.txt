@@ -25,7 +25,7 @@ create table games (
     local_goals integer default (0), 
     visitor_goals integer default (0), 
     active boolean default(false),
-    date timestamp check(date > now()),
+    date timestamp check(date > now())
 );
 
 create table players (

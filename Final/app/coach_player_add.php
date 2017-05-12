@@ -35,7 +35,7 @@
 				<div class="container">					
 					<div class="navbar-header">
 						<div class="navbar-brand">
-							<h1><span>Add Te</span>am</h1>
+							<h1><span>Add Pla</span>yer</h1>
 						</div>
 					</div>
 					<div class="navbar-collapse collapse">							

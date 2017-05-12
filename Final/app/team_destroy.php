@@ -13,5 +13,5 @@
     $team = new Team($db);
     $team->setId($team_id);
     $team->destroy();
-    header("Location:coach_team.php");
+    header("Location:admin_team.php");
 ?>
