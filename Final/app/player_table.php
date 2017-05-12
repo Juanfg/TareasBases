@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin</title>
+    <title>Player</title>
     <link href="../public/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/font-awesome.min.css">
     <link rel="stylesheet" href="../public/css/animate.css">
@@ -18,8 +18,8 @@
     <!--User verification-->
     <?php
         session_start();
-        if (isset($_SESSION['admin_id'])) {
-            $admin_id = $_SESSION['admin_id'];
+        if (isset($_SESSION['player_id'])) {
+            $coach_id = $_SESSION['player_id'];
         }
         else {
             header('Location: logout.php');
@@ -34,14 +34,13 @@
 				<div class="container">					
 					<div class="navbar-header">
 						<div class="navbar-brand">
-							<h1><span>Add Te</span>am</h1>
+							<h1><span>Gerne</span>ral table</h1>
 						</div>
 					</div>
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
-								<li role="presentation"><a href="admin_menu.php">Admin menu</a></li>
-                                <li role="presentation"><a href="admin_team.php">Manage teams</a></li>
+								<li role="presentation"><a href="player_menu.php">Player menu</a></li>
 								<li role="presentation"><a href="logout.php">Logout</a></li>						
 							</ul>
 						</div>
@@ -52,21 +51,43 @@
 	</header>
     <!--End topbar-->
 
+    <!--Start gets -->
+    <?php
+        require_once '../models/Team.php';
+        $db = new database;
+
+        $Team = new Team($db);
+        $teams = $Team->get();
+    ?>
+    <!--End gets -->
+
     <!--Start table-->
     <div class="container" style="margin-top:120px">
         <div class="col-md-12">
-            <form action="team_create.php" method="post">
-                <label for="Name">Name of the team:</label>
-                <input type="text" name="team_name" class="form-control">
-                <br>
-                <label for="Name">Name of the coach:</label>
-                <input type="text" name="coach_name" class="form-control">
-                <br>
-                <label for="Email">Email for the coach:</label>
-                <input type="text" name="coach_email" class="form-control">
-                <br>
-                <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Add team"></input>
-            </form>
+            <table class="table">
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Wins</th>
+                    <th>Loses</th>
+                    <th>Ties</th>
+                    <th>Points</th>
+                    </thead>
+                <tbody>
+                    <?php
+                        foreach ($teams as $team) {
+                            echo "<tr>";
+                            echo "<td>" . $team->id . "</td>";
+                            echo "<td>" . $team->name . "</td>";
+                            echo "<td>" . $team->wins . "</td>";
+                            echo "<td>" . $team->loses . "</td>";
+                            echo "<td>" . $team->ties . "</td>";
+                            echo "<td>" . $team->points . "</td>";
+                            echo "<tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
     <!--End table-->

@@ -57,7 +57,7 @@
         $db = new database;
         $Coach = new Coach($db);
         $coach = $Coach->getCoach($coach_id);
-
+        $_SESSION['team_id'] = $coach->team_id;
         $team = $Coach->getTeam($coach->team_id);
     ?>
     <!--End gets -->
@@ -102,7 +102,7 @@
                     ?>
                 </tbody>
             </table>
-            <a href="coach_player_add.php" class="btn btn-success btn-block"> ADD TEAM</a> 
+            <a href="coach_player_add.php" class="btn btn-success btn-block"> ADD PLAYER</a> 
         </div>
     </div>
     <!--End table-->

@@ -58,9 +58,9 @@ create table admin (
 INSERTS
 
 insert into teams (name) values ('barcelona');
-insert into users (email ,password, valid, token, type) values ('a', 'a', true, 'x', 1);
-insert into users (email ,password, valid, token, type) values ('c', 'c', true, 'x', 2);
-insert into users (email ,password, valid, token, type) values ('p', 'p', true, 'x', 3);
+insert into users (email ,password, valid, token, type) values ('a', '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', true, 'x', 1);
+insert into users (email ,password, valid, token, type) values ('c', '84a516841ba77a5b4648de2cd0dfcb30ea46dbb4', true, 'x', 2);
+insert into users (email ,password, valid, token, type) values ('p', '516b9783fca517eecbd1d064da2d165310b19759', true, 'x', 3);
 
 insert into coaches(name, team_id, user_id) values ('Pep', 1, 2);
 insert into players(name, team_id, user_id) values ('Messi', 1, 3);

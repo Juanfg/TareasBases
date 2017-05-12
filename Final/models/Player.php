@@ -33,9 +33,10 @@
 
         public function save() {
             try{
-                $query = $this->connection->prepare('INSERT INTO players (name, user_id) values (?,?)');
+                $query = $this->connection->prepare('INSERT INTO players (name, user_id, team_id) values (?,?,?)');
                 $query->bindParam(1, $this->name, PDO::PARAM_STR);
                 $query->bindParam(2, $this->user_id, PDO::PARAM_INT);
+                $query->bindParam(3, $this->team_id, PDO::PARAM_INT);
                 $query->execute();
 
                 $this->connection->close();

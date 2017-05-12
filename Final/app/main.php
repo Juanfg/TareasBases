@@ -23,6 +23,7 @@
         session_start();
 
         function startLogin($newEmail, $newPassword){
+            
             $db = new database;
 
             $User= new User($db);
@@ -36,17 +37,19 @@
 
             foreach($users as $user){
                 if(strcmp($newEmail, $user->email) == 0){
-
                     $pass = false;
                     $id = 0;
                     //strcmp(sha1($newPassword)
-                    if($user->valid){
-                        if(strcmp($newPassword, $user->password) == 0){
+                    if($user->valid == 1){
+                        if(strcmp(sha1($newPassword), $user->password) == 0){
                             $pass = true;
                         }
                     }
                     else{
+                        //echo $user->token;
+                        //echo $newPassword;
                         if(strcmp($newPassword, $user->token) == 0){
+                            echo $user->token;
                             $pass = true;
                         }
                     }
@@ -70,6 +73,7 @@
                                 $player_id;
                                 foreach($players as $player){
                                     if(strcmp($player->user_id, $user->id) == 0){
+                                        echo "hshshshsh";
                                         $player_id = $player->id;
                                     }
                                 }

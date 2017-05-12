@@ -116,6 +116,36 @@
             }
         }
 
+        public function getUser($id)
+        {
+            try {
+                $query = "SELECT * FROM users WHERE id = ?";
+                $query->bindParam(1, $id, PDO::PARAM_INT);
+                $query->execute();
+                $this->connection->close();
+                return $query->fetch(PDO::FETCH_OBJ);
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        public function updatePassword($id, $password)
+        {
+            try {
+                $query = "UPDATE users SET password = ?, valid = true WHERE id = ?";
+                $result = $this->connection->prepare($query);
+                $result->bindParam(1, $password, PDO::PARAM_STR);
+                $result->bindParam(2, $id, PDO::PARAM_INT);
+                
+                $result->execute();
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
         public function getLast()
         {
             try {

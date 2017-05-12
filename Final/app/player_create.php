@@ -2,18 +2,17 @@
     session_start();
     require '../vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
     require_once "../models/User.php";
-    require_once "../models/Coach.php";
-    require_once "../models/Team.php";
+    require_once "../models/Player.php";
 
     if (empty($_POST['submit']))
     {
-        header("Location:admin_team.php");
+        header("Location:coach_team.php");
     }
 
     $args = array(
-        'coach_name'  => FILTER_SANITIZE_STRING,
-        'team_name'  => FILTER_SANITIZE_STRING,
-        'coach_email'  => FILTER_SANITIZE_STRING,
+        'player_name'  => FILTER_SANITIZE_STRING,
+        'player_email'  => FILTER_SANITIZE_STRING,
+        'team_id'  => FILTER_SANITIZE_STRING,
     );
 
     $post = (object)filter_input_array(INPUT_POST, $args);
@@ -35,7 +34,7 @@
     $mail->Port = 587;
 
     $mail->setFrom('lalo.lunagt@gmail.com', 'Football Leagues');
-    $mail->addAddress($post->coach_email, $coach_name);
+    $mail->addAddress($post->player_email, $post->player_name);
     $mail->addReplyTo('lalo.lunagt@gmail.com', 'Football Leagues');
 
     $mail->Subject = 'Football Leagues account';
@@ -44,28 +43,21 @@
 
     $db = new database;
 
-    $team = new Team($db);
-    $team->setName($post->team_name);
-    $team->save();
-
-    $lastTeam = new Team($db);
-    $lastT = $lastTeam->getLast();
-
     $user = new User($db);
-    $user->setEmail($post->coach_email);
+    $user->setEmail($post->player_email);
     $user->setPassword("secret");
     $user->setToken($token);
-    $user->setType(2);
+    $user->setType(3);
     $user->save();
 
     $lastUser = new User($db);
     $lastU = $lastUser->getLast();
 
-    $coach = new Coach($db);
-    $coach->setName($post->coach_name);
-    $coach->setTeam($lastT->id);
-    $coach->setUser($lastU->id);
-    $coach->save();
+    $player = new Player($db);
+    $player->setName($post->player_name);
+    $player->setTeam($post->team_id);
+    $player->setUser($lastU->id);
+    $player->save();
 
-    header("Location:admin_team.php");
+    header("Location:coach_team.php");
 ?>

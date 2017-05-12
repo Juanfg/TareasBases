@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin</title>
+    <title>Coach</title>
     <link href="../public/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/font-awesome.min.css">
     <link rel="stylesheet" href="../public/css/animate.css">
@@ -18,8 +18,9 @@
     <!--User verification-->
     <?php
         session_start();
-        if (isset($_SESSION['admin_id'])) {
-            $admin_id = $_SESSION['admin_id'];
+        if (isset($_SESSION['coach_id']) && isset($_SESSION['team_id'])) {
+            $coach_id = $_SESSION['coach_id'];
+            $team_id = $_SESSION['team_id'];
         }
         else {
             header('Location: logout.php');
@@ -40,8 +41,8 @@
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
-								<li role="presentation"><a href="admin_menu.php">Admin menu</a></li>
-                                <li role="presentation"><a href="admin_team.php">Manage teams</a></li>
+								<li role="presentation"><a href="coach_menu.php">Coach menu</a></li>
+                                <li role="presentation"><a href="coach_team.php">Manage team</a></li>
 								<li role="presentation"><a href="logout.php">Logout</a></li>						
 							</ul>
 						</div>
@@ -55,17 +56,15 @@
     <!--Start table-->
     <div class="container" style="margin-top:120px">
         <div class="col-md-12">
-            <form action="team_create.php" method="post">
-                <label for="Name">Name of the team:</label>
-                <input type="text" name="team_name" class="form-control">
+            <form action="player_create.php" method="post">
+                <label for="Name">Name of the player:</label>
+                <input type="text" name="player_name" class="form-control">
                 <br>
-                <label for="Name">Name of the coach:</label>
-                <input type="text" name="coach_name" class="form-control">
+                <label for="Name">Email of the player:</label>
+                <input type="text" name="player_email" class="form-control">
+                <input type="hidden" name="team_id" value= "<?php echo $team_id; ?>">
                 <br>
-                <label for="Email">Email for the coach:</label>
-                <input type="text" name="coach_email" class="form-control">
-                <br>
-                <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Add team"></input>
+                <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Add player"></input>
             </form>
         </div>
     </div>
