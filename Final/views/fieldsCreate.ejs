@@ -39,7 +39,7 @@
 					</div>
                     <div class="navbar-header">
 						<div class="navbar-brand">
-                        <h1><span>Fields</span></h1>
+                        <h1><span>Create</span>Field</h1>
 						</div>
                     </div>
 					<div class="navbar-collapse collapse">							
@@ -58,27 +58,15 @@
     <!--Start menu-->
     <div class="feature">
         <div class="container" style="margin-top:120px;">
-            <table class="table">
-                <thead>
-                    <th>Name</th>
-                    <th>Actions</th>
-                </thead>
-                <tbody>
-                <% for(var i = 0; i < fields.length; i++) {%>
-                    <tr name="<%= fields[i].name %>">
-                        <td><%= fields[i].name %></td>
-                        <td>
-                            <button class="btn btn-info update" id="<%= fields[i]._id %>">Update</button>
-                            <button class="btn btn-danger delete" id="<%= fields[i]._id %>">Delete</button>
-                        </td>
-                    </tr>
-                <% } %>                    
-                </tbody>
-            </table>
-            <button class="btn btn-success" id="add-new">Add new Field</button>
+            <form action="/fields" method="POST">
+                <input class="input-color-black" type="text" placeholder="Name" name="name">
+                <br><br>
+                <button type="submit" class="btn btn-success">Create</button>
+            </form>
         </div>
     </div>
     <!--End menu-->
+
     <script src="js/jquery.js"></script>
     <script src="js/main.js"></script>
 </body>
