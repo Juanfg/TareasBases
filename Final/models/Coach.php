@@ -1,6 +1,6 @@
 <?php
-    require_once "../db/database.php";
-    require_once "../interfaces/ICoaches.php";
+    require_once('../db/database.php');
+    require_once('../interfaces/ICoaches.php');
 
     class Coach implements ICoaches
     {
@@ -76,14 +76,17 @@
             }
         }
 
-        public function team() {
+        public function getTeam($team_id) {
             try{
-                $query = $this->connection->prepare('UPDATE coaches SET team_id = ? WHERE id = ?');
-                $query->bindParam(1, $this->team_id, PDO::PARAM_INT);
-                $query->bindParam(2, $this->id, PDO::PARAM_INT);
+                $query = $this->connection->prepare('SELECT players.id, players.name, users.email 
+                FROM players 
+                INNER JOIN users ON (players.user_id = users.id)
+                WHERE players.team_id = ?');
+                $query->bindParam(1, $team_id, PDO::PARAM_INT);
                 $query->execute();
 
                 $this->connection->close();
+                return $query->fetchAll(PDO::FETCH_OBJ);
             }
             catch(PDOException $e) {
                 echo  $e->getMessage();
