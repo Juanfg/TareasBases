@@ -18,8 +18,8 @@
     <!--User verification-->
     <?php
         session_start();
-        if (isset($_SESSION['coach_id'])) {
-            $coach_id = $_SESSION['coach_id'];
+        if (isset($_SESSION['player_id'])) {
+            $coach_id = $_SESSION['player_id'];
         }
         else {
             header('Location: logout.php');

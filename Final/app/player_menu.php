@@ -66,7 +66,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
-						<a href="#">
+						<a href="player_game.php">
 							<i class="fa fa-calendar"></i>
 						</a>
 						<h2>Next games</h2>
