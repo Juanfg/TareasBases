@@ -105,6 +105,8 @@
             }
             catch(PDOException $e){
                 echo $e->getMessage();
+            }
+        }
 
         public function updateName($id, $name) {
             try{
