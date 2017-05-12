@@ -149,7 +149,7 @@
         public function getLast()
         {
             try {
-                $query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
+                $query = "SELECT * FROM getLast";
                 $result = $this->connection->prepare($query);
                 $result->execute();
                 $this->connection->close();

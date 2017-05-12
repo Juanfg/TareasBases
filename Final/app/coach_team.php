@@ -24,6 +24,15 @@
         else {
             header('Location: logout.php');
         }
+        require_once '../models/Coach.php';
+        require_once '../models/Team.php';
+        $db = new database;
+        $Coach = new Coach($db);
+        $coach = $Coach->getCoach($coach_id);
+        $_SESSION['team_id'] = $coach->team_id;
+        $Team = new Team($db);
+        $actTeam = $Team->getTeam($coach->team_id);
+        $team = $Coach->getTeam($coach->team_id);
     ?>
     <!--End verification-->
     
@@ -34,7 +43,7 @@
 				<div class="container">					
 					<div class="navbar-header">
 						<div class="navbar-brand">
-							<h1><span>Te</span>am</h1>
+							<h1><span>Te</span>am <?php echo $actTeam->name; ?></h1>
 						</div>
 					</div>
 					<div class="navbar-collapse collapse">							
@@ -50,17 +59,6 @@
 		</nav>		
 	</header>
     <!--End topbar-->
-
-    <!--Start gets -->
-    <?php
-        require_once '../models/Coach.php';
-        $db = new database;
-        $Coach = new Coach($db);
-        $coach = $Coach->getCoach($coach_id);
-        $_SESSION['team_id'] = $coach->team_id;
-        $team = $Coach->getTeam($coach->team_id);
-    ?>
-    <!--End gets -->
 
     <!--Start table-->
     <div class="container" style="margin-top:120px">

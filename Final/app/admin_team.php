@@ -82,7 +82,7 @@
                             echo '<td width="5%">
                                     <div class="col-xs-1">
                                         <form action="team_edit.php" method="POST">
-                                            <input type="hidden" name="player_id" value='.$team->id.'>
+                                            <input type="hidden" name="team_id" value='.$team->id.'>
                                             <button class="btn btn-primary"><i class="fa fa-pencil"></i></button>
                                         </form>
                                     </div>
