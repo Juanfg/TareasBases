@@ -4,7 +4,14 @@
     class Team
     {
         private $connection;
+        private $id;
         private $name;
+
+        public function setId($id)
+        {
+            $this->id = $id;
+        }
+
 
         public function setName($name){
             $this->name = $name;
@@ -36,6 +43,21 @@
                 $result->execute();
                 $this->connection->close();
                 return $result->fetchAll(PDO::FETCH_OBJ);
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        public function getTeam($id)
+        {
+            try {
+                $query = "SELECT * FROM teams WHERE id = ?";
+                $result = $this->connection->prepare($query);
+                $result->bindParam(1, $id, PDO::PARAM_INT);
+                $result->execute();
+                $this->connection->close();
+                return $result->fetch(PDO::FETCH_OBJ);
             }
             catch(PDOException $e) {
                 echo $e->getMessage();
@@ -83,6 +105,32 @@
             }
             catch(PDOException $e){
                 echo $e->getMessage();
+
+        public function updateName($id, $name) {
+            try{
+                $query = $this->connection->prepare('UPDATE teams SET name = ? WHERE id = ?');
+                $query->bindParam(1, $name, PDO::PARAM_STR);
+                $query->bindParam(2, $id, PDO::PARAM_INT);
+                $query->execute();
+
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo  $e->getMessage();
+            }
+        }
+
+        public function destroy() {
+            try{
+
+                $query = $this->connection->prepare('DELETE FROM teams WHERE id = ?');
+                $query->bindParam(1, $this->id, PDO::PARAM_STR);
+                $query->execute();
+
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo  $e->getMessage();
             }
         }
     }
