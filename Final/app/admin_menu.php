@@ -57,7 +57,7 @@
 			<div class="text-center">
             	<div class="col-md-4">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" >
-						<a href="#">
+						<a href="admin_team.php">
                             <i class="fa fa-users"></i>	
                         </a>
 						<h2>Manage teams</h2>
@@ -66,14 +66,18 @@
 				</div>
 				<div class="col-md-4">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
-						<i class="fa fa-calendar"></i>	
-						<h2>Manage schedules</h2>
+						<a href="admin_game.php">
+							<i class="fa fa-calendar"></i>
+						</a>	
+						<h2>Schedule Games</h2>
 						<p>Here you can edit the game schedules and register the wins and loses.</p>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div  class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms" >
-						<i class="fa fa-table" href="manage_student.php"></i>	
+						<a href="admin_table.php">
+							<i class="fa fa-table"></i>	
+						</a>
 						<h2>General table</h2>
 						<p>See the information of all the teams.</p>
 					</div>

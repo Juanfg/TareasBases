@@ -105,7 +105,7 @@
                                             <label style="color:white;" for="Password">Password:</label>
                                                 <input type="password" name="password" class="form-control" >
                                             <br>
-                                            <input class="btn btn-success btn-block btn-md" type="submit" name="login"></input>
+                                            <input class="btn btn-success btn-block btn-md" type="submit" name="login" value="Enter"></input>
                                         </form>
                                     </div>
                                 </div>
