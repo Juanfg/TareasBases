@@ -17,7 +17,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2011-10-24T09:39:02+00:00",
+        "time": "2011-10-24 09:39:02",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -85,7 +85,7 @@
         "suggest": {
             "league/oauth2-google": "Needed for Google XOAUTH2 authentication"
         },
-        "time": "2017-03-15T19:32:56+00:00",
+        "time": "2017-03-15 19:32:56",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

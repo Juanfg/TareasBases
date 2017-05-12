@@ -1,4 +1,4 @@
-$('.add-new').click(function() {
+$('#add-new').click(function() {
     var url = "/fieldscreate";
     $(location).attr('href', url);
 });

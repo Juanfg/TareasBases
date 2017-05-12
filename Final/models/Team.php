@@ -71,5 +71,19 @@
                 echo $e->getMessage();
             }
         }
+
+        public function getSpecific($team_id)
+        {
+            try {
+                $query = $this->connection->prepare('SELECT name FROM teams WHERE id = (?) LIMIT 1');
+                $query->bindParam(1, $team_id, PDO::PARAM_STR);
+                $query->execute();
+                $this->connection->close();
+                return $query->fetchAll(PDO::FETCH_OBJ);                
+            }
+            catch(PDOException $e){
+                echo $e->getMessage();
+            }
+        }
     }
 ?>

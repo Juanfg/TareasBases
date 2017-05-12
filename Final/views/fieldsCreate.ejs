@@ -46,7 +46,10 @@
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
 								<!--<li role="presentation"><a href="blog.html">Blog</a></li>-->
-								<li role="presentation"><a href="http://localhost/TareasBases/Final/app/admin/menu.php">Logout</a></li>						
+								<li role="presentation"><a id="logout" href="">Logout</a></li>	
+                                <script>
+                                    document.getElementById('logout').href = "http://" + window.location.hostname + "/TareasBases/Final/app/logout.php"; 
+                                </script>					
 							</ul>
 						</div>
 					</div>						

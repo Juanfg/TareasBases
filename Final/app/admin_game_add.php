@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin</title>
+    <title>Coach</title>
     <link href="../public/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/font-awesome.min.css">
     <link rel="stylesheet" href="../public/css/animate.css">
@@ -24,10 +24,6 @@
         else {
             header('Location: logout.php');
         }
-
-        if (isset($_POST['game_id'])) {
-            $game_id = filter_input(INPUT_POST, 'game_id');
-        }
     ?>
     <!--End verification-->
     
@@ -38,7 +34,7 @@
 				<div class="container">					
 					<div class="navbar-header">
 						<div class="navbar-brand">
-							<h1><span>Edit Ga</span>me</h1>
+							<h1><span>Add Te</span>am</h1>
 						</div>
 					</div>
 					<div class="navbar-collapse collapse">							
@@ -59,27 +55,37 @@
     <!--Start gets-->
     <?php
         require_once '../models/Team.php';
-        require_once '../models/Game.php';
         $db = new database;
         $Team = new Team($db);
-        $Game = new Game($db);
-        $game = $Game->getGame($game_id);
-        $local_team = $Team->getSpecific($game->local_id);
-        $visitor_team = $Team->getSpecific($game->visitor_id);
+        $teams = $Team->get();
     ?>
     <!--End get-->
 
     <!--Start table-->
     <div class="container" style="margin-top:120px">
         <div class="col-md-12">
-            <form action="game_save_goals.php" method="post">
-                <label for="local_team_goals"><?php echo $local_team[0]->name ?></label>
-                <input type="number" name="local_team_goals" class="form-control">
-                <input type="number" name="visitor_team_goals" class="form-control">
-                <label for="visitor_team_goals"><?php echo $visitor_team[0]->name ?></label>
-                <br><br>
-                <input name="game_id" type="hidden" value="<?php echo $game_id ?>" class="form-control">
-                <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Update Game"></input>
+            <form action="game_save.php" method="post">
+                <label for="Local">Local Team:</label>
+                <select name="local_team" class="form-control">
+                    <?php
+                        foreach ($teams as $team)
+                            echo "<option value='" . $team->id . "'>" . $team->name . "</option>";
+                    ?>
+                </select>
+                <br>
+                <label for="Visitor">Visitor Team:</label>
+                <select name="visitor_team" class="form-control">
+                    <?php
+                        foreach ($teams as $team)
+                            echo "<option value='" . $team->id . "'>" . $team->name . "</option>";
+                    ?>
+                </select>
+                <br>
+                <label for="Date">Date of the game:</label>
+                <input type="datetime-local" name="date" class="form-control">
+                <br>
+                <input name="field" class="form-control" value="1" type="hidden">
+                <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Add Game"></input>
             </form>
         </div>
     </div>

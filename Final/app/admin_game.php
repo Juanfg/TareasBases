@@ -54,10 +54,12 @@
     <!--Start gets -->
     <?php
         require_once '../models/Game.php';
+        require_once '../models/Team.php';
         $db = new database;
 
         $Game = new Game($db);
         $games = $Game->get();
+        $Team = new Team($db);
     ?>
     <!--End gets -->
 
@@ -77,17 +79,19 @@
                     <?php
                         foreach ($games as $game) {
                             if($game->active == false){
+                                $local_team = $Team->getSpecific($game->local_id);
+                                $visitor_team = $Team->getSpecific($game->visitor_id);
                                 echo "<tr>";
                                 echo "<td>" . $game->id . "</td>";
-                                echo "<td>" . $game->local_id . "</td>";
-                                echo "<td>" . $game->visitor_id . "</td>";
+                                echo "<td>" . $local_team[0]->name . "</td>";
+                                echo "<td>" . $visitor_team[0]->name . "</td>";
                                 echo "<td>" . $game->date . "</td>";
-                                echo "<td>" . $game->field . "</td>";
+                                echo "<td>" . $game->field_id . "</td>";
                                 echo '<td width="15%">
                                     <div class="col-xs-1">
                                         <form action="game_update.php" method="POST">
-                                            <input type="hidden" name="player_id" value='.$game->id.'>
-                                            <button class="btn btn-primary"><i class="fa fa-check"></i></button>
+                                            <input type="hidden" name="game_id" value='.$game->id.' class="form-control">
+                                            <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-check"></i></button>
                                         </form>
                                     </div>
                                 </td>';
@@ -97,7 +101,7 @@
                     ?>
                 </tbody>
             </table>
-            <a href="#" class="btn btn-success btn-block"> ADD GAME</a> 
+            <a href="admin_game_add.php" class="btn btn-success btn-block"> ADD GAME</a> 
         </div>
     </div>
     <!--End table-->

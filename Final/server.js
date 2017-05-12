@@ -12,8 +12,8 @@ MongoClient.connect('mongodb://juanfg:a@ds031601.mlab.com:31601/final-bases', (e
     if (err)
         return console.log(err);
     db = database;
-    app.listen(3000, () => {
-        console.log('Listening on port 3000');
+    app.listen(8004, () => {
+        console.log('Listening on port 8004');
     });
 });
 
