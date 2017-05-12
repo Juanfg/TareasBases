@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
-    <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/font-awesome.min.css">
     <link rel="stylesheet" href="../public/css/animate.css">
     <link href="../public/css/prettyPhoto.css" rel="stylesheet">
@@ -99,10 +99,10 @@
                                     ?>
                                     <div class="col-md-6">
                                         <form action="main.php" method="post">
-                                            <label for="Email">Email:</label>
+                                            <label style="color:white;" for="Email">Email:</label>
                                                 <input type="text" name="email" class="form-control" >
                                             <br>
-                                            <label for="Password">Password:</label>
+                                            <label style="color:white;" for="Password">Password:</label>
                                                 <input type="password" name="password" class="form-control" >
                                             <br>
                                             <input class="btn btn-success btn-block btn-md" type="submit" name="login"></input>

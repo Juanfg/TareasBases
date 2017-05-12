@@ -1,8 +1,7 @@
 <?php
     require_once('../db/database.php');
-    require_once('../interfaces/ICoaches.php');
 
-    class Coach implements ICoaches
+    class Coach
     {
         private $connection;
         private $id;
@@ -78,7 +77,7 @@
 
         public function getTeam($team_id) {
             try{
-                $query = $this->connection->prepare('SELECT players.id, players.name, users.email 
+                $query = $this->connection->prepare('SELECT players.id, players.user_id, players.name, users.email 
                 FROM players 
                 INNER JOIN users ON (players.user_id = users.id)
                 WHERE players.team_id = ?');

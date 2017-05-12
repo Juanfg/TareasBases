@@ -1,8 +1,7 @@
 <?php
     require_once('../db/database.php');
-    require_once('../interfaces/IPlayers.php');
 
-    class Player implements IPlayers
+    class Player
     {
         private $connection;
         private $id;
@@ -46,6 +45,20 @@
             }
         }
 
+        public function destroy() {
+            try{
+
+                $query = $this->connection->prepare('DELETE FROM players WHERE id = ?');
+                $query->bindParam(1, $this->id, PDO::PARAM_STR);
+                $query->execute();
+
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo  $e->getMessage();
+            }
+        }
+
         public function get()
         {
             try {
@@ -74,6 +87,22 @@
                 echo $e->getMessage();
             }
         }
+
+        public function updateName()
+        {
+            try {
+                $query = "UPDATE players SET name = ? WHERE id = ?";
+                $query = $this->connection->prepare($query);
+                $query->bindParam(1, $this->name, PDO::PARAM_STR);
+                $query->bindParam(2, $this->id, PDO::PARAM_INT);
+                $query->execute();
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
 
         public function team() {
             try{

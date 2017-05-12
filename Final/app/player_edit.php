@@ -24,6 +24,13 @@
         else {
             header('Location: logout.php');
         }
+        if (isset($_POST['player_id']) && isset($_POST['user_id'])) {
+            $player_id = filter_input(INPUT_POST, 'player_id');
+            $user_id = filter_input(INPUT_POST, 'user_id');
+        }
+        else{
+                header("Location:coach_team.php");
+        }
     ?>
     <!--End verification-->
     
@@ -41,6 +48,7 @@
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
 								<li role="presentation"><a href="coach_menu.php">Coach menu</a></li>
+                                <li role="presentation"><a href="coach_team.php">Manage teams</a></li>
 								<li role="presentation"><a href="logout.php">Logout</a></li>						
 							</ul>
 						</div>
@@ -53,55 +61,29 @@
 
     <!--Start gets -->
     <?php
+
         require_once '../models/Coach.php';
         $db = new database;
         $Coach = new Coach($db);
         $coach = $Coach->getCoach($coach_id);
 
-        $team = $Coach->getTeam($coach->team_id);
     ?>
     <!--End gets -->
 
     <!--Start table-->
     <div class="container" style="margin-top:120px">
         <div class="col-md-12">
-            <table class="table">
-                <thead>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    </thead>
-                <tbody>
-                    <?php
-                        foreach ($team as $player) {
-                            echo "<tr>";
-                            echo "<td>" . $player->id . "</td>";
-                            echo "<td>" . $player->name . "</td>";
-                            echo "<td>" . $player->email . "</td>";
-                            echo '<td width="15%">
-                                    <div class="col-xs-1">
-                                        <form action="player_edit.php" method="POST">
-                                            <input type="hidden" name="user_id" value='.$player->user_id.'>
-                                            <input type="hidden" name="player_id" value='.$player->id.'>
-                                            <button class="btn btn-primary"><i class="fa fa-pencil"></i></button>
-                                        </form>
-                                    </div>
-                                </td>';
-                            echo '<td width="15%">
-                                    <div class="col-xs-1">
-                                        <form action="player_destroy.php" method="POST">
-                                            <input type="hidden" name="id" value='.$player->id.'>
-                                            <button class="btn btn-danger"><i class="fa fa-pencil"></i></button>
-                                        </form>
-                                    </div>
-                                </td>';
-                            echo "<tr>";
-                        }
-                    ?>
-                </tbody>
-            </table>
+            <form action="player_save.php" method="post">
+                <label for="Name">Name:</label>
+                <input type="text" name="name" class="form-control">
+                <br>
+                <label for="Email">Email:</label>
+                <input type="text" name="email" class="form-control">
+                <input type="hidden" name="user_id" value= "<?php echo $user_id; ?>">
+                <input type="hidden" name="player_id" value= "<?php echo $player_id; ?>">
+                <br>
+                <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Edit player"></input>
+            </form>
         </div>
     </div>
     <!--End table-->

@@ -1,9 +1,7 @@
 <?php
-    define('__ROOT__', dirname(dirname(__FILE__)));
-    require_once(__ROOT__.'/db/database.php');
-    require_once(__ROOT__.'/interfaces/IUsers.php');
+    require_once('../db/database.php');
 
-    class User implements IUsers
+    class User
     {
         private $connection;
 
@@ -79,6 +77,20 @@
 
                 $query = $this->connection->prepare('DELETE FROM users WHERE id = ?');
                 $query->bindParam(1, $this->id, PDO::PARAM_STR);
+                $query->execute();
+
+                $this->connection->close();
+            }
+            catch(PDOException $e) {
+                echo  $e->getMessage();
+            }
+        }
+
+        public function updateEmail() {
+            try{
+                $query = $this->connection->prepare('UPDATE users SET email = ? WHERE id = ?');
+                $query->bindParam(1, $this->email, PDO::PARAM_STR);
+                $query->bindParam(2, $this->id, PDO::PARAM_INT);
                 $query->execute();
 
                 $this->connection->close();

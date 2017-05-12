@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Player</title>
-    <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/font-awesome.min.css">
     <link rel="stylesheet" href="../public/css/animate.css">
     <link href="../public/css/prettyPhoto.css" rel="stylesheet">
