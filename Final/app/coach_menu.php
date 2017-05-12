@@ -55,7 +55,16 @@
     <div class="feature">
 		<div class="container" style="margin-top:120px">
 			<div class="text-center">
-            	<div class="col-md-4">
+				<div class="col-md-3">
+					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" >
+						<a href="coach_password.php">
+                            <i class="fa fa-key"></i>	
+                        </a>
+						<h2>Change your password</h2>
+						<p>Here you can change your password.</p>
+					</div>
+				</div>
+            	<div class="col-md-3">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" >
 						<a href="coach_team.php">
                             <i class="fa fa-users"></i>	
@@ -64,7 +73,7 @@
 						<p>Add players or delete them from your team.</p>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
 						<a href="games.php">
 							<i class="fa fa-calendar"></i>
@@ -73,7 +82,7 @@
 						<p>Here you can watch the games you have pendent.</p>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div  class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms" >
 						<a href="coach_table.php">
 							<i class="fa fa-table"></i>

@@ -102,6 +102,7 @@
                     ?>
                 </tbody>
             </table>
+            <a href="coach_player_add.php" class="btn btn-success btn-block"> ADD TEAM</a> 
         </div>
     </div>
     <!--End table-->

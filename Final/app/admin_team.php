@@ -57,7 +57,7 @@
         $db = new database;
 
         $Team = new Team($db);
-        $teams = $Team->get();
+        $teams = $Team->getWithCoach();
     ?>
     <!--End gets -->
 
@@ -68,6 +68,7 @@
                 <thead>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Coach</th>
                     <th>Edit</th>
                     <th>Delete</th>
                     </thead>
@@ -77,17 +78,18 @@
                             echo "<tr>";
                             echo "<td>" . $team->id . "</td>";
                             echo "<td>" . $team->name . "</td>";
-                            echo '<td width="15%">
+                            echo "<td>" . $team->coach . "</td>";
+                            echo '<td width="5%">
                                     <div class="col-xs-1">
-                                        <form action="player_edit.php" method="POST">
+                                        <form action="team_edit.php" method="POST">
                                             <input type="hidden" name="player_id" value='.$team->id.'>
                                             <button class="btn btn-primary"><i class="fa fa-pencil"></i></button>
                                         </form>
                                     </div>
                                 </td>';
-                            echo '<td width="15%">
+                            echo '<td width="5%">
                                     <div class="col-xs-1">
-                                        <form action="player_destroy.php" method="POST">
+                                        <form action="team_destroy.php" method="POST">
                                             <input type="hidden" name="id" value='.$team->id.'>
                                             <button class="btn btn-danger"><i class="fa fa-pencil"></i></button>
                                         </form>
@@ -98,6 +100,7 @@
                     ?>
                 </tbody>
             </table>
+            <a href="admin_team_add.php" class="btn btn-success btn-block"> ADD TEAM</a> 
         </div>
     </div>
     <!--End table-->

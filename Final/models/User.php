@@ -58,6 +58,8 @@
             }
         }
 
+        
+
         public function update() {
             try{
                 $query = $this->connection->prepare('UPDATE users SET email = ? WHERE id = ?');
@@ -108,6 +110,20 @@
                 $result->execute();
                 $this->connection->close();
                 return $result->fetchAll(PDO::FETCH_OBJ);
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        public function getLast()
+        {
+            try {
+                $query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
+                $result = $this->connection->prepare($query);
+                $result->execute();
+                $this->connection->close();
+                return $result->fetch(PDO::FETCH_OBJ);
             }
             catch(PDOException $e) {
                 echo $e->getMessage();

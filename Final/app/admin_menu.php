@@ -55,7 +55,7 @@
     <div class="feature">
 		<div class="container" style="margin-top:120px">
 			<div class="text-center">
-            	<div class="col-md-4">
+            	<div class="col-md-3">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" >
 						<a href="admin_team.php">
                             <i class="fa fa-users"></i>	
@@ -64,7 +64,7 @@
 						<p>Edit the teams that belong to this league.</p>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
 						<a href="admin_game.php">
 							<i class="fa fa-calendar"></i>
@@ -73,7 +73,16 @@
 						<p>Here you can edit the game schedules and register the wins and loses.</p>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
+					<div class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
+						<a href="admin_results.php">
+							<i class="fa fa-check"></i>
+						</a>	
+						<h2>Watch Results</h2>
+						<p>Here you can see the results of the previous matches.</p>
+					</div>
+				</div>
+				<div class="col-md-3">
 					<div  class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms" >
 						<a href="admin_table.php">
 							<i class="fa fa-table"></i>	
