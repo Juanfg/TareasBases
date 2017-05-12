@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../public/css/animate.css">
     <link href="../public/css/prettyPhoto.css" rel="stylesheet">
     <link href="../public/css/style.css" rel="stylesheet" />
+	<link href="../public/css/custom.css" rel="stylesheet" />
     <!--End imports-->
 </head>
 <body>
@@ -53,7 +54,7 @@
                         switch($user->type){
                             case 1:
                                 $_SESSION['admin_id'] = $user->id;
-                                header('Location: admin/menu.php');
+                                header('Location: admin_menu.php');
                                 break;
                             case 2:
                                 $coach_id;
@@ -63,7 +64,7 @@
                                     }
                                 }
                                 $_SESSION['coach_id'] = $coach_id;
-                                header('Location: coach/menu.php');
+                                header('Location: coach_menu.php');
                                 break;
                             case 3:
                                 $player_id;
@@ -73,7 +74,7 @@
                                     }
                                 }
                                 $_SESSION['player_id'] = $player_id;
-                                header('Location: player/menu.php');
+                                header('Location: player_menu.php');
                                 break;
                         }
                     }

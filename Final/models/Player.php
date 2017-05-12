@@ -1,6 +1,6 @@
 <?php
-    require_once "../db/database.php";
-    require_once "../interfaces/IPlayers.php";
+    require_once('../db/database.php');
+    require_once('../interfaces/IPlayers.php');
 
     class Player implements IPlayers
     {

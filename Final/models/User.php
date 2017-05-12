@@ -1,6 +1,7 @@
 <?php
-    require_once "../db/database.php";
-    require_once "../interfaces/IUsers.php";
+    define('__ROOT__', dirname(dirname(__FILE__)));
+    require_once(__ROOT__.'/db/database.php');
+    require_once(__ROOT__.'/interfaces/IUsers.php');
 
     class User implements IUsers
     {

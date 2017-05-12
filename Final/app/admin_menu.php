@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin</title>
-    <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../public/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../public/css/animate.css">
-    <link href="../../public/css/prettyPhoto.css" rel="stylesheet">
-    <link href="../../public/css/style.css" rel="stylesheet" />
-    <link href="../../public/css/custom.css" rel="stylesheet" />
+    <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../public/css/animate.css">
+    <link href="../public/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../public/css/style.css" rel="stylesheet" />
+	<link href="../public/css/custom.css" rel="stylesheet" />
     <!--Ene imports-->
 </head>
 <body>
@@ -22,7 +22,7 @@
             $user_id = $_SESSION['admin_id'];
         }
         else {
-            header('Location: ../logout.php');
+            header('Location: logout.php');
         }
     ?>
     <!--End verification-->
@@ -41,7 +41,7 @@
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
 								<!--<li role="presentation"><a href="blog.html">Blog</a></li>-->
-								<li role="presentation"><a href="../logout.php">Logout</a></li>						
+								<li role="presentation"><a href="logout.php">Logout</a></li>						
 							</ul>
 						</div>
 					</div>						
