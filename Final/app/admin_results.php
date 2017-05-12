@@ -34,7 +34,7 @@
 				<div class="container">					
 					<div class="navbar-header">
 						<div class="navbar-brand">
-							<h1><span>Sched</span>ule games</h1>
+							<h1><span>Watch</span>Results</h1>
 						</div>
 					</div>
 					<div class="navbar-collapse collapse">							
@@ -70,36 +70,30 @@
                 <thead>
                     <th>ID</th>
                     <th>Local</th>
+                    <th></th>
                     <th>Visitor</th>
+                    <th></th>
                     <th>Date</th>
-                    <th>Set Results</th>
                     </thead>
                 <tbody>
                     <?php
                         foreach ($games as $game) {
-                            if($game->active == false){
+                            if($game->active == true){
                                 $local_team = $Team->getSpecific($game->local_id);
                                 $visitor_team = $Team->getSpecific($game->visitor_id);
                                 echo "<tr>";
                                 echo "<td>" . $game->id . "</td>";
                                 echo "<td>" . $local_team[0]->name . "</td>";
+                                echo "<td>" . $game->local_goals . "</td>";
                                 echo "<td>" . $visitor_team[0]->name . "</td>";
+                                echo "<td>" . $game->visitor_goals . "</td>";
                                 echo "<td>" . $game->date . "</td>";
-                                echo '<td width="15%">
-                                    <div class="col-xs-1">
-                                        <form action="game_update.php" method="POST">
-                                            <input type="hidden" name="game_id" value='.$game->id.' class="form-control">
-                                            <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-check"></i></button>
-                                        </form>
-                                    </div>
-                                </td>';
                                 echo "<tr>";
                             }
                         }
                     ?>
                 </tbody>
             </table>
-            <a href="admin_game_add.php" class="btn btn-success btn-block"> ADD GAME</a> 
         </div>
     </div>
     <!--End table-->

@@ -84,7 +84,6 @@
                 <label for="Date">Date of the game:</label>
                 <input type="datetime-local" name="date" class="form-control">
                 <br>
-                <input name="field" class="form-control" value="1" type="hidden">
                 <input class="btn btn-success btn-block btn-md" type="submit" name="submit" value="Add Game"></input>
             </form>
         </div>

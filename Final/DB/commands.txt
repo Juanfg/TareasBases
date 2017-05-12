@@ -18,12 +18,6 @@ create table teams (
     points integer check (points >= 0) default 0
 );
 
-create table fields (
-    id serial primary key, 
-    name varchar(30),
-    location varchar(30)
-);
-
 create table games (
     id serial primary key,
     local_id integer references teams(id) on update cascade on delete cascade, 
@@ -32,7 +26,6 @@ create table games (
     visitor_goals integer default (0), 
     active boolean default(false),
     date timestamp check(date > now()),
-    field_id integer
 );
 
 create table players (

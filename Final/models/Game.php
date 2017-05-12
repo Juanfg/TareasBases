@@ -11,7 +11,6 @@
         private $visitor_goals;
         private $active;
         private $date;
-        private $field;
         
         public function __construct(database $db)
         {
@@ -48,19 +47,14 @@
             $this->date = $date;
         }
 
-        public function setField($field_id)
-        {
-            $this->field = $field_id;
-        }
 
         public function save()
         {
             try{
-                $query = $this->connection->prepare('INSERT INTO games (local_id, visitor_id, date, field_id) values (?,?,?,?)');
+                $query = $this->connection->prepare('INSERT INTO games (local_id, visitor_id, date) values (?,?,?)');
                 $query->bindParam(1, $this->local_id, PDO::PARAM_STR);
                 $query->bindParam(2, $this->visitor_id, PDO::PARAM_STR);
                 $query->bindParam(3, $this->date, PDO::PARAM_STR);
-                $query->bindParam(4, $this->field, PDO::PARAM_INT);
                 $query->execute();
 
                 $this->connection->close();

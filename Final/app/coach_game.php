@@ -18,8 +18,8 @@
     <!--User verification-->
     <?php
         session_start();
-        if (isset($_SESSION['admin_id'])) {
-            $coach_id = $_SESSION['admin_id'];
+        if (isset($_SESSION['coach_id'])) {
+            $coach_id = $_SESSION['coach_id'];
         }
         else {
             header('Location: logout.php');
@@ -85,14 +85,6 @@
                                 echo "<td>" . $local_team[0]->name . "</td>";
                                 echo "<td>" . $visitor_team[0]->name . "</td>";
                                 echo "<td>" . $game->date . "</td>";
-                                echo '<td width="15%">
-                                    <div class="col-xs-1">
-                                        <form action="game_update.php" method="POST">
-                                            <input type="hidden" name="game_id" value='.$game->id.' class="form-control">
-                                            <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-check"></i></button>
-                                        </form>
-                                    </div>
-                                </td>';
                                 echo "<tr>";
                             }
                         }
