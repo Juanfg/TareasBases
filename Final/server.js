@@ -52,7 +52,8 @@ app.post('/fieldsupdate/:id', (req, res) => {
     db.collection('fields')
         .findOneAndUpdate({_id: ObjectId(req.params.id)}, {
             $set: {
-                name: req.body.name
+                name: req.body.name,
+                location: req.body.location
             }
         }, {
             sort: {_id: -1},

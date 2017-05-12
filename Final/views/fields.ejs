@@ -34,14 +34,9 @@
 				<div class="container">					
 					<div class="navbar-header">
 						<div class="navbar-brand">
-							<h1><span>Ad</span>min</h1>
+							<h1><span>Champion</span>ships</h1>
 						</div>
 					</div>
-                    <div class="navbar-header">
-						<div class="navbar-brand">
-                        <h1><span>Fields</span></h1>
-						</div>
-                    </div>
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
@@ -70,6 +65,7 @@
                 <% for(var i = 0; i < fields.length; i++) {%>
                     <tr name="<%= fields[i].name %>">
                         <td><%= fields[i].name %></td>
+                        <td><%= fields[i].location %></td>
                         <td>
                             <button class="btn btn-info update" id="<%= fields[i]._id %>">Update</button>
                             <button class="btn btn-danger delete" id="<%= fields[i]._id %>">Delete</button>
@@ -78,7 +74,7 @@
                 <% } %>                  
                 </tbody>
             </table>
-            <button class="btn btn-success" id="add-new">Add new Field</button>
+            <button class="btn btn-success" id="add-new">Add new Championship</button>
         </div>
     </div>
     <!--End menu-->

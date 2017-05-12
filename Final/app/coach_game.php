@@ -40,7 +40,7 @@
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">							
-								<li role="presentation"><a href="admin_menu.php">Admin menu</a></li>
+								<li role="presentation"><a href="coach_menu.php">Coach menu</a></li>
 								<li role="presentation"><a href="logout.php">Logout</a></li>						
 							</ul>
 						</div>
@@ -90,7 +90,6 @@
                     ?>
                 </tbody>
             </table>
-            <a href="admin_game_add.php" class="btn btn-success btn-block"> ADD GAME</a> 
         </div>
     </div>
     <!--End table-->
