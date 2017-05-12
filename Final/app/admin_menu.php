@@ -94,12 +94,12 @@
 				<div class="col-md-4">
 					<div  class="hi-icon-wrap hi-icon-effect wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" >
 						<a id="fields" href="">
-							<i class="fa fa-table"></i>	
+							<i class="fa fa-trophy"></i>	
 						</a>
 						<script>
 							document.getElementById('fields').href = "http://" + window.location.hostname + ":8004/fields"; 
 						</script>
-						<h2>Fields</h2>
+						<h2>Championships</h2>
 						<p>Here you can add/edit/delete fields of the games.</p>
 					</div>
 				</div>
